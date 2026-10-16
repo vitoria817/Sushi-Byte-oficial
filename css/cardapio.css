@@ -1,0 +1,482 @@
+
+/* FUNDO GERAL DA PÁGINA */
+body {
+    background: radial-gradient(circle at center, #05142a 0%, #010b1d 70%);
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* TÍTULO SUSHI BYTE */
+#sushiCardapio {
+    color: rgb(255, 253, 253);
+    font-size: 20px;
+    margin: 15px 20px;
+    position: relative;
+    top: 8px;
+}
+#byteCardapio {
+    color: rgb(181, 0, 0);
+    font-size: 20px;
+    margin: -20px;
+    position: relative;
+    top: 8px;
+}
+
+
+/* BARRA DE PESQUISA - CONTAINER */
+.PesquisaCardapio {
+    position: relative;
+    margin: 15px;
+}
+
+/* ÍCONE DE LUPA DENTRO DA BARRA */
+.iconeDePesquisa {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* CAMPO DE TEXTO DA BUSCA */
+.PesquisaCardapio input {
+    width: 100%;
+    height: 55px;
+    box-sizing: border-box;
+    padding-left: 45px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(23, 23, 40);
+    color: white;
+    font-size: 16px;
+}
+
+/* COR DO TEXTO PLACEHOLDER DA BUSCA */
+.PesquisaCardapio input::placeholder {
+    color: rgb(120, 120, 130);
+}
+
+/* CATEGORIAS - CONTAINER (linha de botões) */
+.opcoesDoCardapio {
+    display: flex;
+    gap: 10px;
+    margin: 0 20px 20px 20px;
+    overflow-x: auto;
+}
+
+/* BOTÃO DE CADA CATEGORIA */
+.opcoesDoCardapio button {
+    background-color: rgb(23, 23, 40);
+    color: rgb(186, 186, 186);
+    border: none;
+    border-radius: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* BOTÃO DE CATEGORIA - EFEITO AO PASSAR O MOUSE */
+.opcoesDoCardapio button:hover {
+    background-color: rgb(200, 3, 3);
+    color: white;
+    transition: 0.3s;
+}
+
+/* NAV INFERIOR - CONTAINER */
+.navInferior {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #080f1d;
+    border-top: 1px solid #1c2a3d;
+    padding: 12px 0;
+    position: fixed; /* gruda embaixo da tela mesmo rolando */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* CADA ITEM DO NAV (ícone + texto empilhados) */
+.itemNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+/* ÍCONE DE CADA ITEM (cor padrão, cinza) */
+.itemNav i {
+    font-size: 20px;
+    color: rgb(150, 150, 160);
+}
+
+/* TEXTO DE CADA ITEM (cor padrão, cinza) */
+.itemNav p {
+    font-size: 12px;
+    color: rgb(150, 150, 160);
+    margin: 0;
+}
+
+/* ITEM ATIVO - ícone e texto ficam vermelhos */
+.itemNav.ativo i,
+.itemNav.ativo p {
+    color: rgb(200, 3, 3);
+}
+/* CONTAINER DE TODOS OS CARDS - organiza em grade lado a lado */
+#listaDeProdutos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 0 20px 90px 20px;
+}
+
+/* CADA CARD INDIVIDUAL */
+#listaDeProdutos > div {
+    background-color: rgb(23, 23, 40);
+    border-radius: 15px;
+    overflow: hidden;
+    width: 280px;
+}
+
+/* NOME DO PRODUTO */
+#listaDeProdutos h3 {
+    color: white;
+    font-size: 18px;
+    margin: 15px 15px 5px 15px;
+}
+
+/* DESCRIÇÃO PEQUENA (30 peças variadas) */
+.descricaoProduto {
+    color: rgb(150, 150, 160);
+    font-size: 13px;
+    margin: 0 15px 15px 15px;
+}
+
+/* LINHA COM PREÇO NA ESQUERDA E BOTÃO NA DIREITA */
+.linhaPrecoBotao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 15px 15px 15px;
+}
+
+/* PREÇO EM VERMELHO */
+.precoProduto {
+    color: rgb(220, 30, 30);
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* BOTÃO + CIRCULAR VERMELHO */
+#listaDeProdutos button {
+    background-color: rgb(200, 3, 3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.itemNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#fundoModalFinalizar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.75);
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+#modalFinalizar {
+    position: relative;
+    background-color: #0d1424;
+    border: 1px solid #1c2a3d;
+    border-radius: 20px;
+    padding: 25px;
+    width: 300px;
+    color: white;
+    box-sizing: border-box;
+}
+#modalFinalizar h3 { margin: 0 0 15px 0; }
+#fecharModalFinalizar {
+    position: absolute; top: 15px; right: 15px;
+    background: none; border: none; color: rgb(150,150,160);
+    font-size: 16px; cursor: pointer;
+}
+#cardPedidoModal {
+    display: flex; justify-content: space-between; align-items: center;
+    background-color: rgb(23,23,40); border-radius: 10px;
+    padding: 12px; margin-bottom: 10px;
+}
+#statusPedidoModal {
+    background-color: rgb(60,60,30); color: rgb(230,200,80);
+    padding: 2px 10px; border-radius: 20px; font-size: 12px;
+    text-transform: capitalize;
+}
+#totalPedidoModal { color: rgb(220,30,30); font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+#continuarComprandoModal, #sairTrocarMesaModal {
+    display: block; width: 100%; padding: 13px; border-radius: 12px;
+    font-weight: bold; margin-bottom: 10px; cursor: pointer; border: none;
+}
+#continuarComprandoModal { background-color: rgb(30,30,45); color: white; }
+#sairTrocarMesaModal { background-color: transparent; color: rgb(150,150,160); border: 1px solid #1c2a3d; }
+
+/* ===== PADRÃO VISUAL DO DASHBOARD ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #000 !important;
+    color: #f8fafc;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.app-shell {
+    min-height: 100vh;
+    background: #000;
+}
+
+/* MENU LATERAL */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 258px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #101827;
+    border-right: 1px solid #253044;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    padding: 28px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.brand strong {
+    color: #fff;
+}
+
+.brand b {
+    color: #f00016;
+}
+
+.brand-mark,
+.brand small,
+.sidebar-label {
+    display: none !important;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 12px;
+}
+
+.navigation .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 15px 16px;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    color: #aab4c3;
+    font-size: 15px;
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.navigation .nav-link > span {
+    width: 22px;
+    text-align: center;
+}
+
+.navigation .nav-link:hover {
+    background: #1e293b;
+    color: #fff;
+}
+
+.navigation .nav-link.active {
+    background: #f00016;
+    color: #fff;
+}
+
+.navigation .nav-link em {
+    margin-left: auto;
+    font-size: 10px;
+    font-style: normal;
+}
+
+.sidebar-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 18px 14px;
+    border-top: 1px solid #253044;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #263449;
+    color: #fff;
+}
+
+.user-details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    color: #fff;
+}
+
+.user-details small {
+    color: #94a3b8;
+}
+
+.logout-button {
+    border: 0;
+    background: transparent;
+    color: #aab4c3;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+    min-height: 100vh;
+    margin-left: 258px;
+    padding: 36px 32px;
+    background: #000;
+}
+
+.cardapio-topo {
+    margin-bottom: 30px;
+}
+
+.cardapio-topo h1 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: 32px;
+}
+
+.cardapio-subtitulo {
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+/* BUSCA */
+.PesquisaCardapio {
+    max-width: 500px;
+    margin: 0 0 24px;
+}
+
+.PesquisaCardapio input {
+    border: 1px solid #253044;
+    background: #101827;
+    color: #fff;
+}
+
+/* CATEGORIAS */
+.opcoesDoCardapio {
+    flex-wrap: wrap;
+    margin: 0 0 24px;
+}
+
+.opcoesDoCardapio button {
+    border: 1px solid #253044;
+    border-radius: 12px;
+    background: #101827;
+    color: #cbd5e1;
+}
+
+.opcoesDoCardapio button:hover,
+.opcoesDoCardapio button.ativo {
+    background: #f00016;
+    color: #fff;
+}
+
+/* PRODUTOS */
+#listaDeProdutos {
+    padding: 0 0 40px;
+}
+
+#listaDeProdutos > div {
+    border: 1px solid #253044;
+    background: #101827;
+}
+
+#listaDeProdutos h3 {
+    color: #fff;
+}
+
+.descricaoProduto {
+    color: #aab4c3;
+}
+
+.precoProduto {
+    color: #f00016;
+}
+
+/* RODAPÉ */
+.footer {
+    border-top: 1px solid #253044;
+    color: #718096;
+}
+
+/* TELAS PEQUENAS */
+@media (max-width: 700px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 24px 16px;
+    }
+
+    .sidebar-bottom {
+        margin-top: 0;
+    }
+
+    #listaDeProdutos > div {
+        width: 100%;
+    }
+}

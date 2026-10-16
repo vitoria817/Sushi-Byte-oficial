@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cardapio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/cardapio.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <span id="sushiCardapio">SUSHI</span>
+    <span id="byteCardapio">BYTE</span>
+
+    <div class="PesquisaCardapio">
+        <span class="iconeDePesquisa">🔍</span>
+        <input type="text" id="BuscarItem" placeholder="Buscar item...">
+    </div>
+    <div class="opcoesDoCardapio">
+        <button>Combinados</button>
+        <button>Sushi</button>
+        <button>Temakis</button>
+        <button>Bebidas</button>
+        <button>Bandejas</button>
+    </div>
+
+    <div id="listaDeProdutos"></div>
+
+    <div id="fundoModalFinalizar">
+        <div id="modalFinalizar">
+            <button id="fecharModalFinalizar">✕</button>
+            <h3>Finalizar Atendimento</h3>
+            <div id="cardPedidoModal">
+                <span id="numeroPedidoModal">#--</span>
+                <span id="statusPedidoModal">--</span>
+            </div>
+            <p id="totalPedidoModal">R$ 0.00</p>
+            <button id="continuarComprandoModal">Continuar Comprando</button>
+            <button id="sairTrocarMesaModal">Sair / Trocar Mesa</button>
+        </div>
+    </div>
+
+    <footer>
+        <nav class="navInferior">
+            <a href="cardapio.html" class="itemNav ativo">
+                <i class="fas fa-home"></i>
+                <p>Cardápio</p>
+            </a>
+            <a href="carrinho.html" class="itemNav">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Carrinho</p>
+            </a>
+            <a href="historico.html" class="itemNav">
+                <i class="fas fa-history"></i>
+                <p>Histórico</p>
+            </a>
+            <a href="finalizar.html" class="itemNav">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+                <p>Finalizar</p>
+            </a>
+        </nav>
+    </footer>
+
+    <script src="js/localStorage.js"></script>
+    <script src="js/cardapioSelecao.js"></script>
+    <script src="js/finalizarModal.js"></script>
+</body>
+
+</html>
