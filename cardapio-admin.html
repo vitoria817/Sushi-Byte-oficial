@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cardápio administrativo do Sushi Byte">
+    <title>Cardápio | Sushi Byte</title>
+
+
+    <link rel="stylesheet" href="css/Dashboard.css">
+<link rel="stylesheet" href="css/cardapio-admin.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <!-- MENU LATERAL ADMINISTRATIVO -->
+        <aside class="sidebar">
+
+            <a class="brand" href="Dashboard.html" aria-label="Sushi Byte início">
+                <span class="brand-text">
+                    <strong>SUSHI</strong> <b>BYTE</b>
+                </span>
+            </a>
+
+            <nav class="navigation" aria-label="Menu principal">
+
+                <a class="nav-link" href="Dashboard.html">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a class="nav-link" href="pedidos-admin.html">
+                    <span>▤</span> Pedidos
+                </a>
+
+                <a class="nav-link active" href="cardapio-admin.html">
+                    <span>🍣</span> Cardápio
+                </a>
+
+                <a class="nav-link" href="estoque-admin.html">
+                    <span>▣</span> Estoque
+                </a>
+
+                <a class="nav-link" href="relatorios-admin.html#funcionarios">
+                    <span>♙</span> Funcionários
+                </a>
+
+                <a class="nav-link" href="relatorios-admin.html#cozinha">
+                    <span>♨</span> Cozinha
+                </a>
+
+                <a class="nav-link" href="relatorios-admin.html#relatorios">
+                    <span>▥</span> Relatórios
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="user-avatar">G</div>
+
+                <div class="user-details">
+                    <strong id="nomeGerente">Gerente</strong>
+                    <small>Gerente</small>
+                </div>
+
+                <button id="sairBtn" class="logout-button" type="button" title="Sair" aria-label="Sair">↪</button>
+            </div>
+
+        </aside>
+
+        <!-- CONTEÚDO DO CARDÁPIO -->
+        <main class="main-content cardapio-admin-conteudo">
+
+            <header class="cardapio-topo">
+                <div>
+                    <h1>Cardápio</h1>
+                    <p class="cardapio-subtitulo">
+                        Consulte os produtos disponíveis no restaurante.
+                    </p>
+                </div>
+            </header>
+
+            <section class="cardapio-area">
+
+                <div class="PesquisaCardapio">
+                    <span class="iconeDePesquisa">🔍</span>
+                    <input type="text" id="BuscarItem" placeholder="Buscar produto..." aria-label="Buscar produto">
+                </div>
+
+                <div class="opcoesDoCardapio">
+                    <button type="button">Combinados</button>
+                    <button type="button">Sushi</button>
+                    <button type="button">Temakis</button>
+                    <button type="button">Bebidas</button>
+                    <button type="button">Bandejas</button>
+                </div>
+
+                <div id="listaDeProdutos"></div>
+
+            </section>
+
+            <!-- MODAL ORIGINAL -->
+            <div id="fundoModalFinalizar">
+                <div id="modalFinalizar">
+
+                    <button id="fecharModalFinalizar" type="button">✕</button>
+
+                    <h3>Finalizar Atendimento</h3>
+
+                    <div id="cardPedidoModal">
+                        <span id="numeroPedidoModal">#--</span>
+                        <span id="statusPedidoModal">--</span>
+                    </div>
+
+                    <p id="totalPedidoModal">R$ 0.00</p>
+
+                    <button id="continuarComprandoModal" type="button">
+                        Continuar Comprando
+                    </button>
+
+                    <button id="sairTrocarMesaModal" type="button">
+                        Sair / Trocar Mesa
+                    </button>
+
+                </div>
+            </div>
+
+            <footer class="footer">
+                Sushi Byte <span>•</span> Painel administrativo
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- MANTÉM OS SCRIPTS DO CARDÁPIO -->
+    <script src="js/localStorage.js"></script>
+    <script src="js/cardapioSelecao.js"></script>
+    <script src="js/finalizarModal.js"></script>
+
+</body>
+
+</html>

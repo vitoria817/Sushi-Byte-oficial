@@ -1,0 +1,930 @@
+
+/* CONTEÚDO PRINCIPAL */
+.cardapio-admin-conteudo {
+    min-width: 0;
+}
+
+.cardapio-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.cardapio-topo h1 {
+    margin: 8px 0;
+    color: var(--text);
+    font-size: 30px;
+}
+
+.cardapio-subtitulo {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* ÁREA DO CARDÁPIO */
+.cardapio-area {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* PESQUISA */
+.cardapio-admin-conteudo .PesquisaCardapio {
+    position: relative;
+    margin: 0;
+    width: 100%;
+}
+
+.cardapio-admin-conteudo .iconeDePesquisa {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+}
+
+.cardapio-admin-conteudo .PesquisaCardapio input {
+    width: 100%;
+    height: 52px;
+    box-sizing: border-box;
+    padding: 0 18px 0 48px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    background: var(--panel);
+    color: var(--text);
+    font-size: 14px;
+}
+
+.cardapio-admin-conteudo .PesquisaCardapio input::placeholder {
+    color: var(--muted);
+}
+
+.cardapio-admin-conteudo .PesquisaCardapio input:focus {
+    border-color: var(--orange);
+}
+
+/* CATEGORIAS */
+.cardapio-admin-conteudo .opcoesDoCardapio {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    overflow-x: auto;
+}
+
+.cardapio-admin-conteudo .opcoesDoCardapio button {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.cardapio-admin-conteudo .opcoesDoCardapio button:hover {
+    background: var(--orange-soft);
+    border-color: var(--orange);
+    color: var(--text);
+}
+
+/* GRADE DE PRODUTOS */
+#listaDeProdutos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+    padding: 0 0 24px;
+    min-width: 0;
+}
+
+#listaDeProdutos > div {
+    min-width: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    width: auto;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+#listaDeProdutos > div:hover {
+    transform: translateY(-3px);
+    border-color: #40516d;
+}
+
+#listaDeProdutos img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+#listaDeProdutos h3 {
+    color: var(--text);
+    font-size: 16px;
+    margin: 16px 16px 7px;
+}
+
+#listaDeProdutos .descricaoProduto {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0 16px 16px;
+}
+
+#listaDeProdutos .linhaPrecoBotao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 0 16px 16px;
+}
+
+#listaDeProdutos .precoProduto {
+    color: var(--orange);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+#listaDeProdutos button {
+    flex-shrink: 0;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#listaDeProdutos button:hover {
+    filter: brightness(1.12);
+}
+
+/* MODAL */
+#fundoModalFinalizar {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+#modalFinalizar {
+    position: relative;
+    background: var(--sidebar);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 26px;
+    width: 100%;
+    max-width: 360px;
+    color: var(--text);
+    box-sizing: border-box;
+}
+
+#modalFinalizar h3 {
+    margin: 0 30px 18px 0;
+    font-size: 20px;
+}
+
+#fecharModalFinalizar {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#cardPedidoModal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px;
+    margin-bottom: 14px;
+}
+
+#statusPedidoModal {
+    background: rgba(230, 200, 80, 0.12);
+    color: #e6c850;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+#totalPedidoModal {
+    color: var(--orange);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 20px;
+}
+
+#continuarComprandoModal,
+#sairTrocarMesaModal {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+}
+
+#continuarComprandoModal {
+    background: var(--orange);
+    color: white;
+    border-color: var(--orange);
+}
+
+#sairTrocarMesaModal {
+    background: transparent;
+    color: var(--muted);
+}
+
+#continuarComprandoModal:hover,
+#sairTrocarMesaModal:hover {
+    filter: brightness(1.1);
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 700px) {
+    .cardapio-topo h1 {
+        font-size: 25px;
+    }
+
+    #listaDeProdutos {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    #listaDeProdutos img {
+        height: 140px;
+    }
+
+    #listaDeProdutos h3 {
+        font-size: 15px;
+    }
+
+    .cardapio-admin-conteudo .opcoesDoCardapio {
+        flex-wrap: nowrap;
+    }
+}
+
+
+/* CORREÇÃO DE CORES DO CARDÁPIO */
+html,
+body,
+.app-shell,
+.main-content {
+    background: #000 !important;
+    color: #f8fafc !important;
+}
+
+.sidebar {
+    background: #101827 !important;
+    border-right: 1px solid #253044 !important;
+}
+
+.brand {
+    color: #ffffff !important;
+}
+
+.brand strong {
+    color: #ffffff !important;
+}
+
+.brand b {
+    color: #f00016 !important;
+}
+
+.navigation .nav-link {
+    color: #aab4c3;
+}
+
+.navigation .nav-link.active {
+    background: #f00016 !important;
+    color: #ffffff !important;
+}
+
+.cardapio-topo h1,
+#listaDeProdutos h3 {
+    color: #ffffff !important;
+}
+
+.cardapio-subtitulo,
+.descricaoProduto {
+    color: #aab4c3 !important;
+}
+
+.PesquisaCardapio input,
+.opcoesDoCardapio button,
+#listaDeProdutos > div {
+    background: #101827 !important;
+    color: #ffffff !important;
+    border-color: #253044 !important;
+}
+
+#listaDeProdutos .precoProduto {
+    color: #f00016 !important;
+}
+
+.footer {
+    color: #94a3b8 !important;
+    border-color: #253044 !important;
+}
+
+
+/* ===== BARRA LATERAL DO CARDÁPIO ===== */
+
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 258px !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    background: #101827 !important;
+    border-right: 1px solid #253044 !important;
+    box-sizing: border-box !important;
+    z-index: 1000 !important;
+    overflow-y: auto;
+}
+
+/* LOGO */
+.sidebar .brand {
+    display: flex !important;
+    align-items: center !important;
+    padding: 28px 20px !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    color: #ffffff !important;
+    font-size: 27px !important;
+    font-weight: 800 !important;
+    letter-spacing: -1px !important;
+    white-space: nowrap !important;
+}
+
+.sidebar .brand strong {
+    color: #ffffff !important;
+}
+
+.sidebar .brand b {
+    color: #f00016 !important;
+}
+
+
+/* PADRONIZAR A BARRA LATERAL COM O DASHBOARD */
+
+.sidebar,
+.sidebar * {
+    font-family: Arial, Helvetica, sans-serif !important;
+    letter-spacing: normal;
+}
+
+.sidebar .brand {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    letter-spacing: -1px !important;
+}
+
+.sidebar .navigation .nav-link {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    border-radius: 10px !important;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar .navigation .nav-link:not(.active) {
+    background: transparent !important;
+    color: #aab4c3 !important;
+}
+
+.sidebar .navigation .nav-link:not(.active):hover {
+    background: #1e293b !important;
+    color: #ffffff !important;
+}
+
+.sidebar .navigation .nav-link.active {
+    background: #f00016 !important;
+    color: #ffffff !important;
+}
+
+.sidebar .navigation .nav-link em {
+    font-size: 10px !important;
+    font-weight: 400 !important;
+}
+
+.sidebar .user-details strong {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.sidebar .user-details small {
+    font-size: 11px !important;
+}
+
+
+/* NAVEGAÇÃO */
+.sidebar .navigation {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 16px 12px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar .navigation .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 13px 15px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    color: #aab4c3 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+}
+
+.sidebar .navigation .nav-link > span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    flex-shrink: 0 !important;
+}
+
+.sidebar .navigation .nav-link:hover {
+    background: #1e293b !important;
+    color: #ffffff !important;
+}
+
+.sidebar .navigation .nav-link.active {
+    background: #f00016 !important;
+    color: #ffffff !important;
+}
+
+.sidebar .navigation .nav-link em {
+    margin-left: auto !important;
+    font-size: 9px !important;
+    font-style: normal !important;
+}
+
+/* PERFIL DO GERENTE NO RODAPÉ */
+.sidebar .sidebar-bottom {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: auto !important;
+    padding: 18px 14px !important;
+    border-top: 1px solid #253044 !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar .user-avatar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 50% !important;
+    background: #263449 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+.sidebar .user-details {
+    display: flex !important;
+    flex: 1 !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+    color: #ffffff !important;
+}
+
+.sidebar .user-details strong {
+    font-size: 13px !important;
+}
+
+.sidebar .user-details small {
+    color: #94a3b8 !important;
+    font-size: 11px !important;
+}
+
+.sidebar .logout-button {
+    flex-shrink: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: #aab4c3 !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+}
+
+.sidebar .logout-button:hover {
+    color: #f00016 !important;
+}
+
+/* CONTEÚDO AO LADO DO MENU */
+.cardapio-admin-conteudo {
+    margin-left: 258px !important;
+    min-height: 100vh !important;
+    width: calc(100% - 258px) !important;
+    box-sizing: border-box !important;
+}
+
+/* AJUSTE PARA CELULAR */
+@media (max-width: 700px) {
+    .sidebar {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        bottom: auto !important;
+    }
+
+    .sidebar .sidebar-bottom {
+        margin-top: 10px !important;
+    }
+
+    .cardapio-admin-conteudo {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 24px 16px !important;
+    }
+}
+
+
+/* PADRONIZAÇÃO DA FONTE DO CARDÁPIO */
+.cardapio-admin-conteudo,
+.cardapio-admin-conteudo button,
+.cardapio-admin-conteudo input,
+.sidebar {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif !important;
+}
+
+.cardapio-topo h1 {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.8px;
+}
+
+.cardapio-subtitulo {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
+
+.opcoesDoCardapio button {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+#listaDeProdutos h3 {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+#listaDeProdutos .descricaoProduto {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+}
+
+#listaDeProdutos .precoProduto {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+}
+
+
+
+/* ===== BARRA LATERAL IGUAL À DO ESTOQUE ===== */
+
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 258px !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    background: #101827 !important;
+    border-right: 1px solid #253044 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 10 !important;
+    overflow-y: auto;
+    box-sizing: border-box !important;
+}
+
+/* Logo equivalente a .logo do Estoque */
+.sidebar .brand {
+    display: flex !important;
+    align-items: center !important;
+    padding: 28px 20px !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #253044 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    letter-spacing: -1px !important;
+    text-decoration: none !important;
+    color: #ffffff !important;
+    white-space: nowrap !important;
+}
+
+.sidebar .brand strong {
+    color: #ffffff !important;
+}
+
+.sidebar .brand b {
+    color: #f00016 !important;
+}
+
+/* Menu equivalente a .menu do Estoque */
+.sidebar .navigation {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 16px 12px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar .navigation .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 15px 16px !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    color: #aab4c3 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    line-height: normal !important;
+    text-align: left !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: 0.2s !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar .navigation .nav-link > span {
+    display: inline-block !important;
+    width: 20px !important;
+    min-width: 20px !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+}
+
+.sidebar .navigation .nav-link:hover {
+    background: #1e293b !important;
+    color: #ffffff !important;
+}
+
+.sidebar .navigation .nav-link.active {
+    background: #f00016 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+.sidebar .navigation .nav-link em {
+    margin-left: auto !important;
+    font-size: 10px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+}
+
+/* Rodapé do menu */
+.sidebar .sidebar-bottom {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-top: auto !important;
+    padding: 18px 20px !important;
+    border-top: 1px solid #253044 !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar .user-avatar {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: #471523 !important;
+    color: #ff5264 !important;
+    font-weight: 700 !important;
+}
+
+.sidebar .user-details {
+    display: flex !important;
+    flex: 1 !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+    color: #ffffff !important;
+}
+
+.sidebar .user-details strong {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.sidebar .user-details small {
+    color: #818b9b !important;
+    font-size: 11px !important;
+}
+
+.sidebar .logout-button {
+    padding: 8px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #aab4c3 !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+}
+
+.sidebar .logout-button:hover {
+    color: #ffffff !important;
+}
+
+/* Conteúdo alinhado como no Estoque */
+.cardapio-admin-conteudo {
+    margin-left: 258px !important;
+    width: calc(100% - 258px) !important;
+    min-height: 100vh !important;
+    padding: 36px 32px !important;
+    box-sizing: border-box !important;
+}
+
+/* Responsividade igual à página de Estoque */
+@media (max-width: 1000px) and (min-width: 701px) {
+    .sidebar {
+        width: 210px !important;
+    }
+
+    .cardapio-admin-conteudo {
+        margin-left: 210px !important;
+        width: calc(100% - 210px) !important;
+        padding: 28px 20px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .sidebar .brand {
+        padding: 18px !important;
+    }
+
+    .sidebar .navigation {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .sidebar .sidebar-bottom {
+        margin-top: 0 !important;
+    }
+
+    .cardapio-admin-conteudo {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 24px 14px !important;
+    }
+}
+
+/* AÇÕES DOS PRODUTOS */
+.acoesProduto {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.acoesProduto button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.botaoEditarProduto {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+}
+
+.botaoEditarProduto:hover {
+    background: #334155;
+}
+
+.botaoDisponivelProduto {
+    background: #153b2c;
+    color: #4ade80;
+    border: 1px solid #246b4b;
+}
+
+.botaoDisponivelProduto:hover {
+    background: #1b5039;
+}
+
+
+/* AÇÕES DOS PRODUTOS */
+.acoesProduto {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.acoesProduto button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.botaoEditarProduto {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+}
+
+.botaoEditarProduto:hover {
+    background: #334155;
+}
+
+.botaoDisponivelProduto {
+    background: #153b2c;
+    color: #4ade80;
+    border: 1px solid #246b4b;
+}
+
+.botaoDisponivelProduto:hover {
+    background: #1b5039;
+}
