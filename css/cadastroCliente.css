@@ -1,0 +1,168 @@
+body {
+background: radial-gradient(circle at center, #05142a 0%, #010b1d 70%);
+margin: 0;
+}
+
+/* LOGO */
+h1 {
+text-align: center;
+margin-top: 35px;
+margin-bottom: 25px;
+}
+
+#sushiCliente {
+font-family: 'Zen Old Mincho', serif;
+font-weight: 600;
+color: rgb(217, 14, 14);
+font-size: 60px;
+}
+
+#byteCliente {
+font-family: 'Zen Old Mincho', serif;
+font-weight: 600;
+color: rgb(250, 250, 250);
+font-size: 60px;
+}
+
+/* PARTE DO CADASTRO */
+#CadastrosCliente {
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 8px;
+margin: 0 auto;
+text-align: center;
+}
+
+/* PALAVRAS */
+#pedidoMesa {
+ margin-top:-2px;
+ font-size:25px;
+ color: rgb(186, 186, 186);
+ text-align: center;
+}
+
+#nome {
+ color: rgb(186, 186, 186);
+ font-size: 15px;
+ font-weight: bold;
+ margin: 0 0 10px 0;
+ margin-left: 0;
+ text-align: left;
+}
+ 
+#cpf {
+ color: rgb(186, 186, 186);
+ font-size: 15px;
+ font-weight: bold;
+ margin: 0 0 10px 0;
+ margin-left: 0;
+ text-align: left;
+}
+
+#mesa {
+ color: rgb(186, 186, 186);
+ font-size: 15px;
+ font-weight: bold;
+ margin: 0 0 10px 0;
+ margin-left: 0;
+ text-align: left;
+}
+
+/* BOTÃO */
+button { 
+border: none;
+border-radius: 15px;
+background-color: rgb(23, 23, 40);
+font-size: 15px;
+cursor: pointer;
+width: 20%;
+height: 50px;
+}
+/*definir oq vai acontecer com o botão quando o mouse passar por cima dele*/
+button:hover {
+transition: 0.4s;
+background-color:red;
+}
+
+#entrarCardapio {
+    display: block;
+    width:100%;
+    height: 75px;
+    margin: 20px auto;
+    box-sizing: border-box;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* TEXTO DE IDENTIFICAÇÃO */
+#indentificacao {
+text-align: center;
+color: rgb(186, 186, 186);
+font-size: 15px;
+margin-top: 15px;
+
+}/*os campos de escrever*/
+input {
+width: 100%;
+height: 62px;
+box-sizing: border-box;
+font-size: 16px;
+border: none;
+border-radius: 15px;
+padding-left: 18px;
+margin-left: 0;/*deixou pro lado esquerdo*/
+background-color:rgb(23, 23, 40);
+color: white;
+border: 2px solid rgb(62, 62, 70);
+}
+
+input::placeholder {
+color: rgb(120, 120, 130);
+}
+
+#CadastrosCliente input:hover {
+border: 2px solid rgb(200, 3, 3);
+box-shadow: 0 0 10px #ca0101, 0 0 25px;
+}
+
+.CadastroCliente {
+background-color: #080f1d;
+border: 1px solid #1c2a3d;
+border-radius: 30px;
+padding: 40px;
+width: 540px;
+margin: 30px auto;
+}
+
+#CardCliente {
+width: 560px;
+min-height: 650px;
+margin: 3px auto;
+padding: 25px 40px;
+background-color: #080f1d;
+border: 1px solid #1c2a3d;
+border-radius: 30px;
+box-sizing: border-box;
+}
+
+#cardEmojiFuncionario {
+width: 350px;
+height: 97px;
+
+background-color: #111a2b;
+border: 1px solid #26364d;
+border-radius: 15px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+font-size: 35px;
+
+margin: 0 auto;
+margin-top:-20px;
+
+}
