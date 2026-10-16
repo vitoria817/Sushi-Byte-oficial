@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SushiByte | Dashboard</title>
+
+    <link rel="stylesheet" href="css/Dashboard.css">
+    <link rel="stylesheet" href="css/estoque-admin.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/Dashboard.js" defer></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">SUSHI <span>BYTE</span></div>
+
+        <nav class="menu">
+            <a href="Dashboard.html" class="nav-link active">
+                <i class="fa-solid fa-chart-column"></i>
+                Dashboard
+            </a>
+
+            <a href="pedidos-admin.html" class="nav-link">
+                <i class="fa-solid fa-bag-shopping"></i>
+                Pedidos
+            </a>
+
+            <a href="cardapio-admin.html" class="nav-link">
+                <i class="fa-solid fa-bars"></i>
+                Cardápio
+            </a>
+
+            <a href="estoque-admin.html" class="nav-link">
+                <i class="fa-solid fa-cube"></i>
+                Estoque
+            </a>
+
+            <a href="relatorios-admin.html#funcionarios" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                Funcionários
+            </a>
+
+            <a href="relatorios-admin.html#cozinha" class="nav-link">
+                <i class="fa-solid fa-kitchen-set"></i>
+                Cozinha
+            </a>
+
+            <a href="relatorios-admin.html#relatorios" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i>
+                Relatórios
+            </a>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar">G</div>
+
+            <div class="user-details">
+                <strong id="nomeGerente">Gerente</strong>
+                <small>Administrador</small>
+            </div>
+        </div>
+
+        <a href="selecao-acesso.html" class="logout" id="sairBtn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Sair
+        </a>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="page-header dashboard-header">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Acompanhe o desempenho do seu restaurante.</p>
+                <span id="dataAtual" class="dashboard-date"></span>
+            </div>
+
+            <button id="atualizarBtn" class="btn-atualizar" type="button">
+                <i class="fa-solid fa-rotate"></i>
+                Atualizar
+            </button>
+        </header>
+
+        <p id="mensagem" class="message" role="status"></p>
+
+        <!-- INDICADORES -->
+        <section class="stock-summary dashboard-summary">
+
+            <article class="summary-card">
+                <div class="summary-icon orange">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </div>
+                <div>
+                    <h2 id="pedidos">0</h2>
+                    <p>Pedidos hoje</p>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon green">
+                    <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+                <div>
+                    <h2 id="faturamento">R$ 0,00</h2>
+                    <p>Faturamento do dia</p>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon yellow">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <h2 id="ticketMedio">R$ 0,00</h2>
+                    <p>Ticket médio</p>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon red">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div>
+                    <h2 id="totalEstoqueBaixo">0</h2>
+                    <p>Itens com estoque baixo</p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- GRÁFICOS -->
+        <section class="dashboard-grid">
+
+            <article class="stock-panel dashboard-panel">
+                <div class="dashboard-panel-heading">
+                    <div>
+                        <h2>Pedidos por Hora</h2>
+                        <p>Movimento de pedidos durante o dia</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-chart">
+                    <canvas id="pedidosHoraChart"></canvas>
+                    <p id="semPedidosHora" class="dashboard-empty" hidden>
+                        Não há pedidos registrados por hora.
+                    </p>
+                </div>
+            </article>
+
+            <article class="stock-panel dashboard-panel">
+                <div class="dashboard-panel-heading">
+                    <div>
+                        <h2>Produtos mais vendidos</h2>
+                        <p>Os produtos com maior saída</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-chart">
+                    <canvas id="produtosChart"></canvas>
+                    <p id="semProdutos" class="dashboard-empty" hidden>
+                        Não há produtos vendidos para exibir.
+                    </p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- ALERTAS DE ESTOQUE -->
+        <section class="stock-panel dashboard-section">
+            <div class="dashboard-panel-heading">
+                <div>
+                    <h2>Alertas de estoque</h2>
+                    <p>Ingredientes que precisam de atenção</p>
+                </div>
+
+                <span id="contadorAlertas" class="alert-counter">0</span>
+            </div>
+
+            <div id="listaEstoque" class="dashboard-stock-list">
+                <p class="dashboard-empty">Carregando estoque...</p>
+            </div>
+
+            <div class="dashboard-stock-footer">
+                <span class="dashboard-status-dot"></span>
+                Confira os ingredientes abaixo da quantidade mínima.
+            </div>
+        </section>
+
+        <!-- ÚLTIMOS PEDIDOS -->
+        <section class="stock-panel dashboard-section">
+            <div class="dashboard-panel-heading">
+                <div>
+                    <h2>Últimos Pedidos</h2>
+                    <p>Acompanhe os pedidos do restaurante</p>
+                </div>
+
+                <a href="pedidos-admin.html" class="dashboard-link">
+                    Ver pedidos
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Cliente</th>
+                            <th>Horário</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaUltimosPedidos">
+                        <tr>
+                            <td colspan="5" class="loading">
+                                Consulte a página Pedidos para ver os registros.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ATALHOS -->
+        <section class="stock-panel dashboard-section">
+            <div class="dashboard-panel-heading">
+                <div>
+                    <h2>Acesso rápido</h2>
+                    <p>Atalhos para as áreas administrativas</p>
+                </div>
+            </div>
+
+            <div class="dashboard-shortcuts">
+
+                <a href="pedidos-admin.html" class="dashboard-shortcut">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>
+                        <strong>Pedidos</strong>
+                        <small>Gerenciar pedidos</small>
+                    </span>
+                </a>
+
+                <a href="cardapio-admin.html" class="dashboard-shortcut">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>
+                        <strong>Cardápio</strong>
+                        <small>Gerenciar produtos</small>
+                    </span>
+                </a>
+
+                <a href="estoque-admin.html" class="dashboard-shortcut">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>
+                        <strong>Estoque</strong>
+                        <small>Controlar ingredientes</small>
+                    </span>
+                </a>
+
+            </div>
+        </section>
+
+        <footer class="dashboard-footer">
+            SushiByte © 2026 — Painel administrativo
+        </footer>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+SUSHI BYTE — ATUALIZAÇÃO DO DASHBOARD (SB-19)
+
+Esta pasta contém os arquivos atualizados do Dashboard.
+
+Arquivos incluídos:
+- Dashboard.html
+- css/Dashboard.css
+- js/Dashboard.js
+- server/server.js
+
+O que foi contemplado:
+- Faturamento do dia (pedidos com status conta_fechada).
+- Quantidade de pedidos criados hoje.
+- Ticket médio dos pedidos finalizados hoje.
+- Gráfico dos 5 produtos mais vendidos nos últimos 30 dias.
+- Alertas em vermelho para ingredientes abaixo do estoque mínimo.
+- Atalhos para Pedidos, Cardápio, Estoque, Funcionários, Cozinha e Relatórios.
+- Gráfico adicional de pedidos por hora no dia atual.
+- Servidor Express disponibiliza os arquivos estáticos do projeto e abre selecao-acesso.html na rota /.
+
+COMO APLICAR
+1. Faça uma cópia de segurança da sua pasta atual.
+2. Copie os arquivos desta atualização para a pasta equivalente do projeto, substituindo os arquivos correspondentes.
+3. IMPORTANTE: não substitua server/db.js. Mantenha nele suas configurações locais e o banco de teste.
+4. No terminal, dentro da pasta server, pare o servidor com Ctrl+C e execute: node server.js
+5. Acesse http://localhost:3000/ para abrir a tela de seleção de acesso.
+6. Entre como gerente e abra o Dashboard.
+
+OBSERVAÇÕES
+- Os indicadores dependem da conexão válida com PostgreSQL e dos nomes de tabelas/colunas usados no projeto.
+- O erro de senha PostgreSQL (código 28P01) precisa ser resolvido na configuração local de server/db.js; esta atualização não altera credenciais.
+- O gráfico por hora conta todos os pedidos criados hoje, independente do status.
+- Atalhos de áreas que ainda não possuem telas integradas mostram um aviso informativo.
+- A checagem de cargo no navegador é apenas controle de navegação; não substitui autenticação/autorização no servidor.
