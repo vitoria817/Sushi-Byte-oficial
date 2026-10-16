@@ -1,0 +1,74 @@
+body {
+    background: radial-gradient(circle at center, #05142a 0%, #010b1d 70%);
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.topoPagina {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 18px;
+    background-color: #080f1d;
+}
+
+.voltar {
+    position: absolute;
+    left: 18px;
+    color: rgb(186, 186, 186);
+    text-decoration: none;
+    font-size: 18px;
+}
+
+#sushiTopo { color: white; font-weight: bold; }
+#byteTopo { color: rgb(220, 30, 30); font-weight: bold; }
+
+#tituloAcompanhar { padding: 20px 20px 0 20px; margin: 0; }
+#numeroPedido { padding: 0 20px; color: rgb(150, 150, 160); margin: 5px 0; }
+#tempoEstimado {
+    margin: 15px 20px;
+    padding: 12px;
+    background-color: rgb(23, 23, 40);
+    border-radius: 12px;
+    text-align: center;
+    color: rgb(200, 3, 3);
+}
+
+#timelineStatus { padding: 10px 20px; }
+
+.etapaTimeline {
+    position: relative;
+    padding: 0 0 25px 30px;
+    border-left: 2px solid rgb(50, 50, 65);
+}
+.etapaTimeline::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgb(50, 50, 65);
+}
+.etapaTimeline.concluida::before { background-color: rgb(0, 180, 100); }
+.etapaTimeline.atual::before { background-color: rgb(200, 3, 3); }
+.etapaTimeline.atual { border-left-color: rgb(200, 3, 3); }
+
+.tituloEtapa { margin: 0; font-weight: bold; }
+.descricaoEtapa { margin: 4px 0 0 0; font-size: 13px; color: rgb(150, 150, 160); }
+
+#botoesFinaisAcompanhar { padding: 20px 20px 40px 20px; }
+#botoesFinaisAcompanhar a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: rgb(23, 23, 40);
+    color: white;
+}

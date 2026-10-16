@@ -1,0 +1,117 @@
+body {
+    background-color: #000;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.topoPagina {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 18px;
+    background-color: #080f1d;
+}
+
+.voltar {
+    position: absolute;
+    left: 18px;
+    color: rgb(186, 186, 186);
+    text-decoration: none;
+    font-size: 18px;
+}
+
+#sushiTopo { font-weight: bold; }
+#byteTopo { color: rgb(220, 30, 30); font-weight: bold; }
+
+#tituloHistorico { padding: 20px 20px 15px 20px; margin: 0; }
+
+#listaHistorico { padding: 0 20px 100px 20px; }
+
+.cardPedido {
+    background-color: rgb(23, 23, 40);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 15px;
+}
+
+.cabecalhoPedido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.numeroPedido { font-weight: bold; font-size: 16px; }
+
+.statusPedido {
+    background-color: rgb(30, 60, 120);
+    color: rgb(150, 190, 255);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.dataPedido {
+    color: rgb(150, 150, 160);
+    font-size: 13px;
+    margin: 8px 0 14px 0;
+}
+
+.linhaItemPedido {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(200, 200, 210);
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.rodapePedido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #1c2a3d;
+}
+
+.estrelasPedido { color: gold; font-size: 16px; }
+.totalPedido { color: rgb(220, 30, 30); font-weight: bold; font-size: 16px; }
+
+#semPedidos {
+    text-align: center;
+    padding-top: 60px;
+    color: rgb(150, 150, 160);
+}
+#semPedidos i { font-size: 40px; color: rgb(200, 140, 60); }
+#semPedidos p { color: white; font-weight: bold; margin: 10px 0 4px 0; }
+#semPedidos .subTexto { color: rgb(150, 150, 160); font-weight: normal; }
+#botaoVerCardapio {
+    display: inline-block;
+    margin-top: 15px;
+    background-color: rgb(200, 3, 3);
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.navInferior {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #080f1d;
+    border-top: 1px solid #1c2a3d;
+    padding: 12px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.itemNav { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; }
+.itemNav i { font-size: 20px; color: rgb(150, 150, 160); }
+.itemNav p { font-size: 12px; color: rgb(150, 150, 160); margin: 0; }
+.itemNav.ativo i, .itemNav.ativo p { color: rgb(200, 3, 3); }

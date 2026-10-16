@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Histórico de Pedidos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/historico.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="topoPagina">
+        <a href="cardapio.html" class="voltar"><i class="fas fa-arrow-left"></i></a>
+        <span id="sushiTopo">SUSHI</span><span id="byteTopo">BYTE</span>
+    </header>
+
+    <h2 id="tituloHistorico">Histórico de Pedidos</h2>
+
+    <div id="listaHistorico"></div>
+
+    <div id="semPedidos" style="display:none">
+        <i class="fas fa-clipboard-list"></i>
+        <p>Nenhum pedido ainda</p>
+        <p class="subTexto">Seus pedidos aparecerão aqui</p>
+        <a href="cardapio.html" id="botaoVerCardapio">Ver Cardápio</a>
+    </div>
+
+    <footer>
+        <nav class="navInferior">
+            <a href="cardapio.html" class="itemNav">
+                <i class="fas fa-home"></i>
+                <p>Cardápio</p>
+            </a>
+            <a href="carrinho.html" class="itemNav">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Carrinho</p>
+            </a>
+            <a href="historico.html" class="itemNav ativo">
+                <i class="fas fa-history"></i>
+                <p>Histórico</p>
+            </a>
+            <a href="finalizar.html" class="itemNav">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+                <p>Finalizar</p>
+            </a>
+        </nav>
+    </footer>
+
+    <script src="js/historico.js"></script>
+</body>
+</html>

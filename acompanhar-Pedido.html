@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Acompanhar Pedido</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/acompanhar-Pedido.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="topoPagina">
+        <a href="cardapio.html" class="voltar"><i class="fas fa-arrow-left"></i></a>
+        <span id="sushiTopo">SUSHI</span><span id="byteTopo">BYTE</span>
+    </header>
+
+    <h2 id="tituloAcompanhar">Acompanhar Pedido</h2>
+    <p id="numeroPedido">Pedido #<span id="numeroPedidoValor"></span></p>
+    <p id="tempoEstimado"></p>
+
+    <div id="timelineStatus"></div>
+
+    <div id="botoesFinaisAcompanhar" style="display:none">
+        <a href="cardapio.html" id="voltarCardapioAcompanhar">Voltar ao Cardápio</a>
+        <a href="historico.html" id="verHistoricoAcompanhar">Ver Histórico de Pedidos</a>
+    </div>
+
+    <script src="js/localStorage.js"></script>
+    <script src="js/acompanhar-Pedido.js"></script>
+</body>
+</html>
