@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SushiByte | Controle de Estoque</title>
+
+    <link rel="stylesheet" href="css/Dashboard.css">
+    <link rel="stylesheet" href="css/estoque-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">SUSHI <span>BYTE</span></div>
+
+        <nav class="menu">
+            <a href="Dashboard.html" class="nav-link">
+                <i class="fa-solid fa-chart-column"></i>
+                Dashboard
+            </a>
+
+            <a href="pedidos-admin.html" class="nav-link">
+                <i class="fa-solid fa-bag-shopping"></i>
+                Pedidos
+            </a>
+
+            <a href="cardapio-admin.html" class="nav-link">
+                <i class="fa-solid fa-bars"></i>
+                Cardápio
+            </a>
+
+            <a href="estoque-admin.html" class="nav-link active">
+                <i class="fa-solid fa-cube"></i>
+                Estoque
+            </a>
+
+            <a href="relatorios-admin.html#funcionarios" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                Funcionários
+
+            </a>
+
+            <a href="relatorios-admin.html#cozinha" class="nav-link">
+                <i class="fa-solid fa-kitchen-set"></i>
+                Cozinha
+
+            </a>
+
+            <a href="relatorios-admin.html#relatorios" class="nav-link">
+                <i class="fa-solid fa-chart-column"></i>
+                Relatórios
+
+            </a>
+        </nav>
+
+        <a href="selecao-acesso.html" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Sair
+        </a>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h1>Controle de Estoque</h1>
+                <p>Monitoramento de ingredientes e insumos</p>
+            </div>
+        </header>
+
+        <section class="stock-summary">
+            <article class="summary-card">
+                <div class="summary-icon green">
+                    <i class="fa-regular fa-circle-check"></i>
+                </div>
+                <div>
+                    <h2 id="totalNormal">--</h2>
+                    <p>Em Estoque</p>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon yellow">
+                    <i class="fa-regular fa-circle-exclamation"></i>
+                </div>
+                <div>
+                    <h2 id="totalBaixo">--</h2>
+                    <p>Estoque Baixo</p>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon red">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </div>
+                <div>
+                    <h2 id="totalCritico">--</h2>
+                    <p>Crítico</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="stock-panel">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Quantidade</th>
+                            <th>Mínimo</th>
+                            <th>Status</th>
+                            <th class="actions-heading">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaEstoque">
+                        <tr>
+                            <td colspan="5" class="loading">
+                                Carregando estoque...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <p id="mensagem" class="message" role="status"></p>
+    </main>
+
+    <script src="js/estoque-admin.js"></script>
+</body>
+
+</html>
