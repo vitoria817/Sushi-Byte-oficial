@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pedidos administrativos do Sushi Byte">
+    <title>Pedidos | Sushi Byte</title>
+
+    <link rel="stylesheet" href="css/Dashboard.css">
+    <link rel="stylesheet" href="css/pedidos-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <!-- MENU LATERAL ORIGINAL DO DASHBOARD -->
+        <aside class="sidebar">
+
+            <a class="brand" href="Dashboard.html" aria-label="Sushi Byte início">
+                <span class="brand-text">
+                    <strong>SUSHI</strong> <b>BYTE</b>
+                </span>
+            </a>
+            <nav class="navigation" aria-label="Menu principal">
+
+                <a class="nav-link" href="Dashboard.html">
+                    <span><i class="fa-solid fa-chart-column"></i></span>
+                    Dashboard
+                </a>
+
+                <a class="nav-link active" href="pedidos-admin.html">
+                    <span><i class="fa-solid fa-bag-shopping"></i></span>
+                    Pedidos
+                </a>
+
+                <a class="nav-link" href="cardapio-admin.html">
+                    <span><i class="fa-solid fa-bars"></i></span>
+                    Cardápio
+                </a>
+
+                <a class="nav-link" href="estoque-admin.html">
+                    <span><i class="fa-solid fa-cube"></i></span>
+                    Estoque
+                </a>
+
+                <a class="nav-link" href="relatorios-admin.html#funcionarios">
+                    <span><i class="fa-solid fa-users"></i></span>
+                    Funcionários
+                </a>
+
+                <a class="nav-link" href="relatorios-admin.html#cozinha">
+                    <span><i class="fa-solid fa-kitchen-set"></i></span>
+                    Cozinha
+                </a>
+
+                <a class="nav-link" href="relatorios-admin.html#relatorios">
+                    <span><i class="fa-solid fa-chart-line"></i></span>
+                    Relatórios
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="user-avatar">G</div>
+
+                <div class="user-details">
+                    <strong id="nomeGerente">Gerente</strong>
+                    <small>Gerente</small>
+                </div>
+
+                <button id="sairBtn" class="logout-button" type="button" title="Sair" aria-label="Sair">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- CONTEÚDO DA PÁGINA DE PEDIDOS -->
+        <main class="main-content pedidos-conteudo">
+
+            <header class="pedidos-topo">
+                <div>
+                    <h1>Pedidos</h1>
+                    <p>Acompanhe os pedidos realizados no restaurante.</p>
+                </div>
+
+                <button class="botao-atualizar" id="btnAtualizar" type="button">
+                    ↻ Atualizar pedidos
+                </button>
+            </header>
+
+            <section class="resumo-pedidos">
+
+                <div class="resumo-card">
+                    <span>Total de pedidos</span>
+                    <strong id="totalPedidos">—</strong>
+                </div>
+
+                <div class="resumo-card">
+                    <span>Em andamento</span>
+                    <strong id="pedidosAndamento">—</strong>
+                </div>
+
+                <div class="resumo-card">
+                    <span>Contas fechadas</span>
+                    <strong id="pedidosFechados">—</strong>
+                </div>
+
+            </section>
+
+            <section class="pedidos-tabela">
+                <h2>Todos os pedidos</h2>
+
+                <input type="search" id="filtro" class="filtro-pedidos"
+                    placeholder="Buscar por pedido, cliente ou mesa..." aria-label="Buscar pedidos">
+
+                <div id="mensagem" class="mensagem" role="status">
+                    Carregando pedidos...
+                </div>
+
+                <table id="tabelaPedidos" hidden>
+                    <thead>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Cliente</th>
+                            <th>Mesa</th>
+                            <th>Data</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaPedidos"></tbody>
+                </table>
+            </section>
+
+            <footer class="footer">
+                Sushi Byte <span>•</span> Painel administrativo
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        const listaPedidos = document.getElementById('listaPedidos');
+        const mensagem = document.getElementById('mensagem');
+        const tabela = document.getElementById('tabelaPedidos');
+        const filtro = document.getElementById('filtro');
+
+        let pedidos = [];
+
+        function escaparHTML(valor) {
+            return String(valor ?? '').replace(/[&<>"']/g, caractere => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[caractere]);
+        }
+
+        function formatarMoeda(valor) {
+            return Number(valor || 0).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        }
+
+        function formatarData(data) {
+            if (!data) return '—';
+
+            return new Date(data).toLocaleString('pt-BR', {
+                dateStyle: 'short',
+                timeStyle: 'short'
+            });
+        }
+
+        function formatarStatus(status) {
+            const nomes = {
+                recebido: 'Recebido',
+                preparando: 'Em preparação',
+                pronto: 'Pronto',
+                conta_fechada: 'Conta fechada',
+                cancelado: 'Cancelado'
+            };
+
+            return nomes[status] || status || 'Não informado';
+        }
+
+        function atualizarResumo() {
+            document.getElementById('totalPedidos').textContent =
+                pedidos.length;
+
+            document.getElementById('pedidosAndamento').textContent =
+                pedidos.filter(p =>
+                    !['conta_fechada', 'cancelado'].includes(p.status)
+                ).length;
+
+            document.getElementById('pedidosFechados').textContent =
+                pedidos.filter(p => p.status === 'conta_fechada').length;
+        }
+
+        function mostrarPedidos() {
+            const busca = filtro.value.trim().toLowerCase();
+
+            const filtrados = pedidos.filter(p => {
+                return String(p.id).includes(busca) ||
+                    String(p.nome_cliente || '')
+                        .toLowerCase().includes(busca) ||
+                    String(p.mesa ?? '').includes(busca);
+            });
+
+            listaPedidos.innerHTML = filtrados.map(p => {
+                const statusClasse = String(p.status || '')
+                    .toLowerCase()
+                    .replace(/[^a-z0-9_-]/g, '');
+
+                return `
+                    <tr>
+                        <td>#${escaparHTML(p.id)}</td>
+                        <td>${escaparHTML(p.nome_cliente)}</td>
+                        <td>${escaparHTML(p.mesa)}</td>
+                        <td>${escaparHTML(formatarData(p.data_pedido))}</td>
+                        <td>${escaparHTML(formatarMoeda(p.total))}</td>
+                        <td>
+                            <span class="status status-${statusClasse}">
+                                ${escaparHTML(formatarStatus(p.status))}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            if (filtrados.length === 0) {
+                mensagem.hidden = false;
+                mensagem.textContent = 'Nenhum pedido encontrado.';
+                tabela.hidden = true;
+            } else {
+                mensagem.hidden = true;
+                tabela.hidden = false;
+            }
+        }
+
+        async function carregarPedidos() {
+            mensagem.hidden = false;
+            mensagem.classList.remove('erro');
+            mensagem.textContent = 'Carregando pedidos...';
+            tabela.hidden = true;
+
+            try {
+                const resposta = await fetch('/admin/pedidos');
+                const dados = await resposta.json();
+
+                if (!resposta.ok || !dados.sucesso) {
+                    throw new Error(
+                        dados.erro || 'Erro ao carregar pedidos.'
+                    );
+                }
+
+                pedidos = dados.pedidos || [];
+
+                atualizarResumo();
+                mostrarPedidos();
+
+            } catch (erro) {
+                mensagem.hidden = false;
+                mensagem.classList.add('erro');
+                mensagem.textContent =
+                    '❌ Não foi possível carregar os pedidos. Confira se o servidor está rodando e tente novamente.';
+
+                console.error(erro);
+            }
+        }
+
+        filtro.addEventListener('input', mostrarPedidos);
+
+        document.getElementById('btnAtualizar')
+            .addEventListener('click', carregarPedidos);
+
+        carregarPedidos();
+    </script>
+</body>
+
+</html>
