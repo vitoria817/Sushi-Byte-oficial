@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Carrinho</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/carrinho.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <h2 id="tituloCarrinho">Carrinho / Bandeja</h2>
+
+    <div id="listaDoCarrinho"></div>
+
+    <div id="resumoValores">
+        <p>Subtotal <span id="subtotalValor">R$ 0.00</span></p>
+        <p>Taxa de serviço (10%) <span id="taxaValor">R$ 0.00</span></p>
+        <p id="totalLinha">Total <span id="totalValor">R$ 0.00</span></p>
+
+        <div id="botoesFinais">
+            <a href="cardapio.html" id="continuarComprando">Continuar Comprando</a>
+            <button id="enviarCozinha"><i class="fas fa-paper-plane"></i> Enviar para Cozinha</button>
+        </div>
+    </div>
+
+    <footer>
+        <nav class="navInferior">
+            <a href="cardapio.html" class="itemNav">
+                <i class="fas fa-home"></i>
+                <p>Cardápio</p>
+            </a>
+            <a href="carrinho.html" class="itemNav ativo">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Carrinho</p>
+            </a>
+            <a href="historico.html" class="itemNav">
+                <i class="fas fa-history"></i>
+                <p>Histórico</p>
+            </a>
+            <a href="finalizar.html" class="itemNav">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+                <p>Finalizar</p>
+            </a>
+        </nav>
+    </footer>
+
+    <script src="js/localStorage.js"></script>
+    <script src="js/carrinho.js"></script>
+</body>
+
+</html>

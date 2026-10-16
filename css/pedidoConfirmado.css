@@ -1,0 +1,52 @@
+body {
+    background-color: #000;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+#sushiTopo { font-weight: bold; font-size: 22px; }
+#byteTopo { color: rgb(220, 30, 30); font-weight: bold; font-size: 22px; }
+
+#iconeConfirmado {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid rgb(0, 200, 100);
+    color: rgb(0, 200, 100);
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto 25px auto;
+}
+
+#tituloConfirmado { margin: 0 0 8px 0; }
+#subtituloConfirmado { color: rgb(150, 150, 160); margin: 0 0 30px 0; }
+
+#cardNumeroPedido {
+    background-color: rgb(23, 23, 40);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+#labelNumero { color: rgb(150, 150, 160); margin: 0 0 5px 0; font-size: 13px; }
+#numeroPedidoConfirmado { color: rgb(220, 30, 30); font-size: 26px; font-weight: bold; margin: 0 0 12px 0; }
+#tempoEstimadoConfirmado { color: rgb(200, 200, 210); font-size: 14px; margin: 0; }
+
+#acompanharPedidoBotao,
+#voltarCardapioBotao {
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+#acompanharPedidoBotao { background-color: rgb(200, 3, 3); color: white; }
+#voltarCardapioBotao { background-color: rgb(23, 23, 40); color: white; }

@@ -1,0 +1,195 @@
+/* FUNDO GERAL DA PÁGINA */
+body {
+    background-color: #000;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#tituloCarrinho {
+    color: white;
+    padding: 20px;
+    margin: 0;
+}
+
+/* CONTAINER DA LISTA DE ITENS */
+#listaDoCarrinho {
+    padding: 0 20px;
+}
+
+/* CADA LINHA DE ITEM NO CARRINHO */
+.itemCarrinho {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgb(23, 23, 40);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* MINIATURA DO PRODUTO (quadrado com ícone) */
+.miniaturaProduto {
+    width: 55px;
+    height: 55px;
+    background-color: rgb(40, 40, 60);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+/* NOME E PREÇO - ocupa o espaço do meio */
+.infoProduto {
+    flex-grow: 1;
+}
+
+.nomeProduto {
+    color: white;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.precoProduto {
+    color: rgb(220, 30, 30);
+    font-weight: bold;
+    margin: 0;
+}
+
+/* CONTROLE DE QUANTIDADE + EXCLUIR - alinhado à direita */
+.controleQuantidade {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.controleQuantidade span {
+    color: white;
+    min-width: 15px;
+    text-align: center;
+}
+
+.controleQuantidade .aumentar,
+.controleQuantidade .diminuir {
+    background-color: rgb(50, 50, 70);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.controleQuantidade .excluir {
+    background-color: rgb(150, 20, 20);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 30px;
+    height: 26px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* RESUMO DE VALORES */
+#resumoValores {
+    background-color: rgb(15, 17, 30);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#resumoValores > p {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(186, 186, 186);
+    margin: 8px 0;
+}
+
+#totalLinha {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-top: 1px solid #1c2a3d;
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+#totalLinha span {
+    color: rgb(220, 30, 30);
+}
+
+/* BOTÕES FINAIS - lado a lado */
+#botoesFinais {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 90px;
+}
+
+#continuarComprando {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(30, 30, 45);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    height: 55px;
+    font-weight: bold;
+}
+
+#enviarCozinha {
+    flex: 1;
+    background-color: rgb(200, 3, 3);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    height: 55px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* NAV INFERIOR */
+.navInferior {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #080f1d;
+    border-top: 1px solid #1c2a3d;
+    padding: 12px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.itemNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.itemNav i {
+    font-size: 20px;
+    color: rgb(150, 150, 160);
+}
+
+.itemNav p {
+    font-size: 12px;
+    color: rgb(150, 150, 160);
+    margin: 0;
+}
+
+.itemNav.ativo i,
+.itemNav.ativo p {
+    color: rgb(200, 3, 3);
+}
