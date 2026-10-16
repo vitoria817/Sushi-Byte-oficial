@@ -7,6 +7,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Log de toda requisição que chega no servidor.
+app.use((req, res, next) => {
+  console.log(new Date().toLocaleTimeString(), req.method, req.url);
+  next();
+});
+
 // Disponibiliza as páginas HTML, CSS, JavaScript e imagens do projeto.
 app.use(express.static(path.join(__dirname, '..')));
 app.get('/', (req, res) => {
@@ -315,6 +321,63 @@ app.get('/admin/pedidos', async (req, res) => {
   }
 });
 
+// CRIAR PRODUTO
+app.post('/admin/produtos', async (req, res) => {
+    const { nome, descricao, preco, categoria, pecas, icone } = req.body;
+
+    if (
+        !nome?.trim() ||
+        !categoria?.trim() ||
+        preco === '' ||
+        preco == null ||
+        !Number.isFinite(Number(preco)) ||
+        Number(preco) < 0
+    ) {
+        return res.status(400).json({
+            sucesso: false,
+            erro: 'Preencha o nome, a categoria e o preço corretamente.'
+        });
+    }
+
+    const quantidadePecas =
+        pecas === '' || pecas == null ? null : Number(pecas);
+
+    if (quantidadePecas !== null && !Number.isInteger(quantidadePecas)) {
+        return res.status(400).json({
+            sucesso: false,
+            erro: 'A quantidade de peças deve ser um número inteiro.'
+        });
+    }
+
+    try {
+        const resultado = await pool.query(
+            `INSERT INTO produtos (nome, descricao, preco, categoria, pecas, icone, disponivel)
+             VALUES ($1, $2, $3, $4, $5, $6, TRUE)
+             RETURNING id`,
+            [
+                nome.trim(),
+                (descricao || '').trim(),
+                Number(preco),
+                categoria.trim(),
+                quantidadePecas,
+                icone?.trim() || null
+            ]
+        );
+
+        res.status(201).json({
+            sucesso: true,
+            id: resultado.rows[0].id,
+            mensagem: 'Produto criado com sucesso!'
+        });
+    } catch (erro) {
+        console.error('Erro ao criar produto:', erro);
+        res.status(500).json({
+            sucesso: false,
+            erro: 'Não foi possível criar o produto.'
+        });
+    }
+});
+
 // EDITAR PRODUTO
 app.put('/admin/produtos/:id', async (req, res) => {
     const { id } = req.params;
@@ -480,6 +543,6 @@ app.get('/admin/produtos', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+app.listen(3001, () => {
+  console.log('Servidor NOVO na porta 3001 - ARQUIVO:', __filename);
 });

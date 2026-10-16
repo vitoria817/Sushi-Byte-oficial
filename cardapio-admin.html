@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="css/Dashboard.css">
 <link rel="stylesheet" href="css/cardapio-admin.css">
+<link rel="stylesheet" href="css/cardapio-admin-novo-produto.css">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -82,6 +83,10 @@
                         Consulte os produtos disponíveis no restaurante.
                     </p>
                 </div>
+
+                <button id="botaoNovoProduto" class="botao-novo-produto" type="button">
+                    + Novo produto
+                </button>
             </header>
 
             <section class="cardapio-area">
@@ -102,6 +107,56 @@
                 <div id="listaDeProdutos"></div>
 
             </section>
+
+            <!-- MODAL NOVO PRODUTO -->
+            <div id="fundoModalProduto">
+                <div id="modalProduto">
+                    <h3>Novo produto</h3>
+
+                    <form id="formNovoProduto">
+                        <label for="novoProdutoNome">Nome</label>
+                        <input type="text" id="novoProdutoNome" placeholder="Ex.: Temaki Salmão" required>
+
+                        <label for="novoProdutoDescricao">Descrição</label>
+                        <textarea id="novoProdutoDescricao" placeholder="Descreva o produto"></textarea>
+
+                        <div class="linha-campos">
+                            <div>
+                                <label for="novoProdutoPreco">Preço (R$)</label>
+                                <input type="text" id="novoProdutoPreco" placeholder="46,00" required>
+                            </div>
+                            <div>
+                                <label for="novoProdutoCategoria">Categoria</label>
+                                <select id="novoProdutoCategoria" required>
+                                    <option value="Combinados">Combinados</option>
+                                    <option value="Sushi">Sushi</option>
+                                    <option value="Temakis">Temakis</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                    <option value="Bandejas">Bandejas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="linha-campos">
+                            <div>
+                                <label for="novoProdutoPecas">Peças (opcional)</label>
+                                <input type="number" id="novoProdutoPecas" min="0" placeholder="8">
+                            </div>
+                            <div>
+                                <label for="novoProdutoIcone">Ícone (opcional)</label>
+                                <input type="text" id="novoProdutoIcone" maxlength="4" placeholder="🍣">
+                            </div>
+                        </div>
+
+                        <p id="mensagemNovoProduto" role="status"></p>
+
+                        <div class="acoes-modal-produto">
+                            <button type="button" id="cancelarNovoProduto">Cancelar</button>
+                            <button type="submit" id="salvarNovoProduto">Salvar produto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- MODAL ORIGINAL -->
             <div id="fundoModalFinalizar">
@@ -140,6 +195,7 @@
     <script src="js/localStorage.js"></script>
     <script src="js/cardapioSelecao.js"></script>
     <script src="js/finalizarModal.js"></script>
+    <script src="js/cardapio-admin-novo-produto.js"></script>
 
 </body>
 
