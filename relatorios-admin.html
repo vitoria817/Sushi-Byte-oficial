@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUSHI BITE</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  
+  <link rel="stylesheet" href="css/relatorios-admin.css">
+</head>
+<body>
+
+  <!-- barra lateral -->
+  <aside class="sidebar">
+    <div class="logo">
+      <h1>sushi <span>byte</span></h1>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="Dashboard.html" class="nav-item"><i class="fa-solid fa-chart-simple"></i> dashboard</a>
+      <a href="pedidos-admin.html" class="nav-item"><i class="fa-solid fa-clipboard-list"></i> pedidos</a>
+      <a href="cardapio-admin.html" class="nav-item"><i class="fa-solid fa-book-open"></i> cardápio</a>
+      <a href="estoque-admin.html" class="nav-item"><i class="fa-solid fa-box"></i> estoque</a>
+      <a href="#" class="nav-item active" data-target="funcionarios"><i class="fa-solid fa-users"></i> funcionários</a>
+      <a href="#" class="nav-item" data-target="cozinha"><i class="fa-solid fa-utensils"></i> cozinha</a>
+      <a href="#" class="nav-item" data-target="relatorios"><i class="fa-solid fa-chart-line"></i> relatórios</a>
+    </nav>
+
+    <a href="selecao-acesso.html" class="nav-item logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> sair</a>
+  </aside>
+
+  <main class="main-content">
+
+    <!-- funcionarios -->
+    <section id="view-funcionarios" class="view">
+      <header class="page-header">
+        <div>
+          <h2>Gerenciar Funcionários</h2>
+          <p>Cadastro, edição e exclusão de funcionários</p>
+        </div>
+        <button class="btn-primary" id="btn-novo-funcionario"><i class="fa-solid fa-plus"></i> Novo Funcionário</button>
+      </header>
+
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="input-pesquisa" placeholder="Pesquisar funcionário...">
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Cargo</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-funcionarios">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- cozinha -->
+    <section id="view-cozinha" class="view hidden">
+      <header class="page-header">
+        <div>
+          <h2>Painel da Cozinha</h2>
+          <p>Gestão em tempo real da produção</p>
+        </div>
+      </header>
+
+      <div class="kanban-cards">
+        <div class="kanban-card status-aguardando">
+          <span class="label">Aguardando</span>
+          <span class="number" id="count-aguardando">0</span>
+        </div>
+        <div class="kanban-card status-preparo">
+          <span class="label">Em Preparo</span>
+          <span class="number" id="count-preparo">0</span>
+        </div>
+        <div class="kanban-card status-pronto">
+          <span class="label">Prontos</span>
+          <span class="number" id="count-pronto">0</span>
+        </div>
+      </div>
+
+      <div class="order-grid" id="grid-pedidos">
+      </div>
+      
+      <div class="empty-state hidden" id="cozinha-vazia">
+        <i class="fa-solid fa-hat-chef"></i>
+        <h3>Nenhum pedido na fila</h3>
+        <p>Os pedidos aparecerão aqui em tempo real</p>
+      </div>
+    </section>
+
+    <!-- relatorios -->
+    <section id="view-relatorios" class="view hidden">
+      <header class="page-header">
+        <div>
+          <h2>Relatórios</h2>
+          <p>Análises e insights do negócio</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-secondary" id="btn-exportar-pdf"><i class="fa-solid fa-download"></i> Exportar PDF</button>
+          <button class="btn-primary" id="btn-exportar-excel"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
+        </div>
+      </header>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-title">Total de Pedidos</span>
+          <span class="kpi-value" id="kpi-total">0</span>
+          <span class="kpi-sub green">Período atual</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-title">Faturamento</span>
+          <span class="kpi-value" id="kpi-faturamento">R$ 0,00</span>
+          <span class="kpi-sub green">+12% vs. período anterior</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-title">Ticket Médio</span>
+          <span class="kpi-value" id="kpi-ticket">R$ 0,00</span>
+          <span class="kpi-sub green">+8% vs. período anterior</span>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h3>Itens Mais Vendidos</h3>
+        <div class="bar-chart-wrapper" id="chart-wrapper">
+          <div class="y-axis">
+            <span>1</span>
+            <span>0.75</span>
+            <span>0.5</span>
+            <span>0.25</span>
+            <span>0</span>
+          </div>
+          <div class="bar-chart" id="bar-chart">
+          </div>
+        </div>
+        <div class="empty-chart hidden" id="chart-vazio">Nenhuma venda registrada ainda</div>
+      </div>
+      
+      <div class="bottom-grid">
+        <div class="list-container">
+          <h3>Pedidos por Período</h3>
+          <ul>
+            <li><span>Hoje</span> <strong id="pedidos-hoje">0</strong></li>
+            <li><span>Esta Semana</span> <strong id="pedidos-semana">0</strong></li>
+            <li><span>Este Mês</span> <strong id="pedidos-mes">0</strong></li>
+          </ul>
+        </div>
+        <div class="list-container">
+          <h3>Formas de Pagamento</h3>
+          <ul>
+            <li><span>PIX</span> <strong>0</strong></li>
+            <li><span>Crédito</span> <strong>0</strong></li>
+            <li><span>Débito</span> <strong>0</strong></li>
+            <li><span>Dinheiro</span> <strong>0</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- modal funcionario (p criar e editar) -->
+  <div class="modal-overlay hidden" id="modal-funcionario">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-titulo">Novo Funcionário</h2>
+        <button class="close-btn" id="btn-fechar-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-funcionario">
+        <!-- campo iscondido p guardar o id de quem ta sendo editado -->
+        <input type="hidden" id="input-id">
+        
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" id="input-nome" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="input-email" required>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="input-telefone" placeholder="(11) 98765-4321" required>
+        </div>
+        <div class="form-group">
+          <label>Cargo</label>
+          <select id="input-cargo">
+            <option value="Funcionário">Funcionário</option>
+            <option value="Gerente">Gerente</option>
+            <option value="Cozinha">Cozinha</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="input-status">
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn-primary" id="btn-salvar">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/relatorios-admin.js"></script>
+</body>
+</html>
