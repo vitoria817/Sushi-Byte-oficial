@@ -7,70 +7,70 @@
     <meta name="description" content="Cardápio administrativo do Sushi Byte">
     <title>Cardápio | Sushi Byte</title>
 
-
     <link rel="stylesheet" href="css/Dashboard.css">
-<link rel="stylesheet" href="css/cardapio-admin.css">
-<link rel="stylesheet" href="css/cardapio-admin-novo-produto.css">
+    <link rel="stylesheet" href="css/cardapio-admin.css">
+    <link rel="stylesheet" href="css/cardapio-admin-novo-produto.css">
+    <link rel="stylesheet" href="css/menu-lateral.css">
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
     <div class="app-shell">
 
         <!-- MENU LATERAL ADMINISTRATIVO -->
-        <aside class="sidebar">
+        <aside class="sidebar menu-lateral">
+            <a class="menu-lateral-logo" href="Dashboard.html" aria-label="Sushi Byte início">SUSHI <span>BYTE</span></a>
 
-            <a class="brand" href="Dashboard.html" aria-label="Sushi Byte início">
-                <span class="brand-text">
-                    <strong>SUSHI</strong> <b>BYTE</b>
-                </span>
-            </a>
-
-            <nav class="navigation" aria-label="Menu principal">
-
-                <a class="nav-link" href="Dashboard.html">
-                    <span>▦</span> Dashboard
+            <nav class="menu-lateral-itens" aria-label="Menu principal">
+                <a href="Dashboard.html" class="menu-lateral-link">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Dashboard
                 </a>
 
-                <a class="nav-link" href="pedidos-admin.html">
-                    <span>▤</span> Pedidos
+                <a href="pedidos-admin.html" class="menu-lateral-link">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Pedidos
                 </a>
 
-                <a class="nav-link active" href="cardapio-admin.html">
-                    <span>🍣</span> Cardápio
+                <a href="cardapio-admin.html" class="menu-lateral-link active">
+                    <i class="fa-solid fa-bars"></i>
+                    Cardápio
                 </a>
 
-                <a class="nav-link" href="estoque-admin.html">
-                    <span>▣</span> Estoque
+                <a href="estoque-admin.html" class="menu-lateral-link">
+                    <i class="fa-solid fa-cube"></i>
+                    Estoque
                 </a>
 
-                <a class="nav-link" href="relatorios-admin.html#funcionarios">
-                    <span>♙</span> Funcionários
+                <a href="relatorios-admin.html#funcionarios" class="menu-lateral-link">
+                    <i class="fa-solid fa-users"></i>
+                    Funcionários
                 </a>
 
-                <a class="nav-link" href="relatorios-admin.html#cozinha">
-                    <span>♨</span> Cozinha
+                <a href="relatorios-admin.html#cozinha" class="menu-lateral-link">
+                    <i class="fa-solid fa-kitchen-set"></i>
+                    Cozinha
                 </a>
 
-                <a class="nav-link" href="relatorios-admin.html#relatorios">
-                    <span>▥</span> Relatórios
+                <a href="relatorios-admin.html#relatorios" class="menu-lateral-link">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Relatórios
                 </a>
-
             </nav>
 
-            <div class="sidebar-bottom">
+            <div class="menu-lateral-usuario">
                 <div class="user-avatar">G</div>
-
-                <div class="user-details">
+                <div class="menu-lateral-dados">
                     <strong id="nomeGerente">Gerente</strong>
                     <small>Gerente</small>
                 </div>
-
-                <button id="sairBtn" class="logout-button" type="button" title="Sair" aria-label="Sair">↪</button>
             </div>
 
+            <a href="selecao-acesso.html" class="menu-lateral-sair" id="sairBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </a>
         </aside>
 
         <!-- CONTEÚDO DO CARDÁPIO -->
@@ -196,6 +196,7 @@
     <script src="js/cardapioSelecao.js"></script>
     <script src="js/finalizarModal.js"></script>
     <script src="js/cardapio-admin-novo-produto.js"></script>
+    <script src="js/sair.js"></script>
 
 </body>
 

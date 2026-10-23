@@ -1,17 +1,53 @@
-// dados iniciais
-let funcionarios = [
-  { id: 1, nome: 'Carlos Silva', email: 'carlos@sushibyte.com', telefone: '(11) 98765-4321', cargo: 'Gerente', status: 'Ativo' },
-  { id: 2, nome: 'Ana Santos', email: 'ana@sushibyte.com', telefone: '(11) 98765-4322', cargo: 'Funcionário', status: 'Ativo' },
-  { id: 3, nome: 'Roberto Tanaka', email: 'roberto@sushibyte.com', telefone: '(11) 98765-4323', cargo: 'Cozinha', status: 'Ativo' }
-];
+const API = 'http://localhost:3000';
 
-let pedidos = [
-  { id: '1001', mesa: '9', hora: '23:46', status: 'aguardando', itens: ['1x Combinado Salmão', '1x Suco de Laranja', '1x Temaki Salmão'] }
-];
+// Funcionários e pedidos da cozinha vêm do banco
+let funcionarios = [];
+let pedidos = [];
 
-let nextFuncionarioId = 4;
+// Último resumo carregado dos relatórios
+let resumo = null;
 
-// navegacao
+// Nomes bonitos para o que está gravado no banco
+const nomeCargo = { gerente: 'Gerente', funcionario: 'Funcionário', cozinha: 'Cozinha' };
+const nomeStatus = { ativo: 'Ativo', inativo: 'Inativo' };
+
+// Status do banco -> nome que o visual da cozinha usa
+const statusDaTela = { recebido: 'aguardando', em_preparo: 'preparo', pronto: 'pronto' };
+
+// Qual é o próximo status de cada pedido
+const proximoStatus = { recebido: 'em_preparo', em_preparo: 'pronto', pronto: 'entregue' };
+
+// Evita injetar HTML vindo do banco na tela
+function escaparHTML(valor) {
+  const troca = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  return String(valor ?? '').replace(/[&<>"']/g, caractere => troca[caractere]);
+}
+
+function moeda(valor) {
+  return 'R$ ' + Number(valor || 0).toFixed(2).replace('.', ',');
+}
+
+// Faz a chamada ao servidor e devolve os dados (ou lança o erro com a mensagem dele)
+async function chamarApi(caminho, opcoes) {
+  const resposta = await fetch(API + caminho, opcoes);
+  const dados = await resposta.json();
+
+  if (!resposta.ok || !dados.sucesso) {
+    throw new Error(dados.erro || 'Erro ao falar com o servidor.');
+  }
+  return dados;
+}
+
+function enviarJson(metodo, corpo) {
+  return {
+    method: metodo,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(corpo)
+  };
+}
+
+// ---------- Navegação ----------
+
 function setupNavigation() {
   const navItems = document.querySelectorAll('.nav-item[data-target]');
   const views = document.querySelectorAll('.view');
@@ -22,39 +58,53 @@ function setupNavigation() {
       navItems.forEach(nav => nav.classList.remove('active'));
       item.classList.add('active');
       views.forEach(view => view.classList.add('hidden'));
-      
+
       const targetId = 'view-' + item.getAttribute('data-target');
       const targetView = document.getElementById(targetId);
       if (targetView) targetView.classList.remove('hidden');
 
-      if (targetId === 'view-cozinha') renderizarCozinha();
+      if (targetId === 'view-funcionarios') carregarFuncionarios();
+      if (targetId === 'view-cozinha') carregarPedidos();
       if (targetId === 'view-relatorios') renderizarRelatorios();
     });
   });
 }
 
-// renderizar tabela de funcionarios
+// ---------- Funcionários (banco de dados) ----------
+
+async function carregarFuncionarios() {
+  try {
+    const dados = await chamarApi('/admin/funcionarios');
+    funcionarios = dados.funcionarios;
+    renderizarFuncionarios(document.getElementById('input-pesquisa').value);
+  } catch (erro) {
+    console.error('Erro ao carregar funcionários:', erro);
+  }
+}
+
 function renderizarFuncionarios(filtro = '') {
   const tbody = document.getElementById('tabela-funcionarios');
   tbody.innerHTML = '';
 
-  const filtrados = funcionarios.filter(func => 
+  const filtrados = funcionarios.filter(func =>
     func.nome.toLowerCase().includes(filtro.toLowerCase())
   );
 
   filtrados.forEach((func) => {
+    const cargo = String(func.cargo).toLowerCase();
+
     let cargoClass = 'badge-blue';
-    if (func.cargo === 'Gerente') cargoClass = 'badge-red';
-    if (func.cargo === 'Cozinha') cargoClass = 'badge-green';
-    let statusClass = func.status === 'Ativo' ? 'badge-green' : 'badge-red';
+    if (cargo === 'gerente') cargoClass = 'badge-red';
+    if (cargo === 'cozinha') cargoClass = 'badge-green';
+    const statusClass = func.status === 'ativo' ? 'badge-green' : 'badge-red';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td style="font-weight: 600;">${func.nome}</td>
-      <td>${func.email}</td>
-      <td>${func.telefone}</td>
-      <td><span class="badge ${cargoClass}">${func.cargo}</span></td>
-      <td><span class="badge ${statusClass}">${func.status}</span></td>
+      <td style="font-weight: 600;">${escaparHTML(func.nome)}</td>
+      <td>${escaparHTML(func.email)}</td>
+      <td>${escaparHTML(func.telefone || '—')}</td>
+      <td><span class="badge ${cargoClass}">${escaparHTML(nomeCargo[cargo] || func.cargo)}</span></td>
+      <td><span class="badge ${statusClass}">${escaparHTML(nomeStatus[func.status] || func.status)}</span></td>
       <td>
         <button class="action-btn" onclick="abrirModalEditar(${func.id})"><i class="fa-solid fa-pen"></i></button>
         <button class="action-btn delete" onclick="removerFuncionario(${func.id})"><i class="fa-solid fa-trash"></i></button>
@@ -62,83 +112,101 @@ function renderizarFuncionarios(filtro = '') {
     `;
     tbody.appendChild(tr);
   });
-}
 
-// excluir funcionario
-window.removerFuncionario = function(id) {
-  if(confirm('Tem certeza que deseja excluir este funcionário?')) {
-    funcionarios = funcionarios.filter(func => func.id !== id);
-    renderizarFuncionarios(document.getElementById('input-pesquisa').value);
+  if (filtrados.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 24px;">Nenhum funcionário encontrado.</td></tr>';
   }
 }
 
-// abrir modal para editar
-window.abrirModalEditar = function(id) {
+window.removerFuncionario = async function (id) {
+  if (!confirm('Tem certeza que deseja excluir este funcionário?')) return;
+
+  try {
+    await chamarApi('/admin/funcionarios/' + id, { method: 'DELETE' });
+    await carregarFuncionarios();
+  } catch (erro) {
+    alert(erro.message);
+  }
+};
+
+window.abrirModalEditar = function (id) {
   const func = funcionarios.find(f => f.id === id);
   if (!func) return;
 
   document.getElementById('modal-titulo').innerText = 'Editar Funcionário';
   document.getElementById('btn-salvar').innerText = 'Salvar Alterações';
-  
+  document.getElementById('erro-funcionario').innerText = '';
+
   document.getElementById('input-id').value = func.id;
   document.getElementById('input-nome').value = func.nome;
   document.getElementById('input-email').value = func.email;
-  document.getElementById('input-telefone').value = func.telefone;
-  document.getElementById('input-cargo').value = func.cargo;
+  document.getElementById('input-telefone').value = func.telefone || '';
+  document.getElementById('input-cargo').value = String(func.cargo).toLowerCase();
   document.getElementById('input-status').value = func.status;
 
-  document.getElementById('modal-funcionario').classList.remove('hidden');
-}
+  // na edição a senha é opcional: em branco mantém a atual
+  const campoSenha = document.getElementById('input-senha');
+  campoSenha.value = '';
+  campoSenha.required = false;
+  campoSenha.placeholder = 'Deixe em branco para manter a senha atual';
 
-// configuracao do modal e formulario
+  document.getElementById('modal-funcionario').classList.remove('hidden');
+};
+
 function setupModal() {
   const modal = document.getElementById('modal-funcionario');
   const btnNovo = document.getElementById('btn-novo-funcionario');
   const btnFechar = document.getElementById('btn-fechar-modal');
   const btnCancelar = document.getElementById('btn-cancelar');
   const form = document.getElementById('form-funcionario');
+  const campoSenha = document.getElementById('input-senha');
+  const aviso = document.getElementById('erro-funcionario');
 
-  // abre modal para criar novo
   btnNovo.addEventListener('click', () => {
     document.getElementById('modal-titulo').innerText = 'Novo Funcionário';
     document.getElementById('btn-salvar').innerText = 'Cadastrar';
     document.getElementById('input-id').value = '';
     form.reset();
+    aviso.innerText = '';
+
+    // no cadastro a senha é obrigatória
+    campoSenha.required = true;
+    campoSenha.placeholder = 'Senha de acesso';
+
     modal.classList.remove('hidden');
   });
 
   const fecharModal = () => {
     modal.classList.add('hidden');
     form.reset();
+    aviso.innerText = '';
   };
 
   btnFechar.addEventListener('click', fecharModal);
   btnCancelar.addEventListener('click', fecharModal);
 
-  // salvar (criar ou editar)
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const id = document.getElementById('input-id').value;
     const dados = {
       nome: document.getElementById('input-nome').value,
       email: document.getElementById('input-email').value,
+      senha: campoSenha.value,
       telefone: document.getElementById('input-telefone').value,
       cargo: document.getElementById('input-cargo').value,
       status: document.getElementById('input-status').value
     };
 
-    if (id) {
-      // editando
-      const index = funcionarios.findIndex(f => f.id === parseInt(id));
-      funcionarios[index] = { ...funcionarios[index], ...dados };
-    } else {
-      // criando novo
-      funcionarios.push({ id: nextFuncionarioId++, ...dados });
-    }
+    try {
+      if (id) await chamarApi('/admin/funcionarios/' + id, enviarJson('PUT', dados));
+      else await chamarApi('/admin/funcionarios', enviarJson('POST', dados));
 
-    renderizarFuncionarios();
-    fecharModal();
+      fecharModal();
+      await carregarFuncionarios();
+    } catch (erro) {
+      aviso.innerText = erro.message;
+    }
   });
 
   document.getElementById('input-pesquisa').addEventListener('input', (e) => {
@@ -146,7 +214,26 @@ function setupModal() {
   });
 }
 
-// renderizar cozinha
+// ---------- Cozinha (pedidos reais do banco) ----------
+
+async function carregarPedidos() {
+  try {
+    const dados = await chamarApi('/admin/pedidos/cozinha');
+
+    pedidos = dados.pedidos.map(pedido => ({
+      id: pedido.id,
+      mesa: pedido.mesa,
+      status: pedido.status,
+      hora: new Date(pedido.data_pedido).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      itens: pedido.itens
+    }));
+
+    renderizarCozinha();
+  } catch (erro) {
+    console.error('Erro ao carregar pedidos da cozinha:', erro);
+  }
+}
+
 function renderizarCozinha() {
   const grid = document.getElementById('grid-pedidos');
   const vazio = document.getElementById('cozinha-vazia');
@@ -158,39 +245,41 @@ function renderizarCozinha() {
   else vazio.classList.add('hidden');
 
   pedidos.forEach((pedido) => {
-    if (pedido.status === 'aguardando') countAguardando++;
-    if (pedido.status === 'preparo') countPreparo++;
-    if (pedido.status === 'pronto') countPronto++;
+    const statusTela = statusDaTela[pedido.status];
+
+    if (statusTela === 'aguardando') countAguardando++;
+    if (statusTela === 'preparo') countPreparo++;
+    if (statusTela === 'pronto') countPronto++;
 
     let btnTexto = '<i class="fa-solid fa-play"></i> Iniciar Preparo';
     let btnClass = 'aguardando';
     let statusTexto = 'Recebido';
-    
-    if (pedido.status === 'preparo') {
+
+    if (statusTela === 'preparo') {
       btnTexto = '<i class="fa-solid fa-check-circle"></i> Pedido Pronto';
       btnClass = 'preparo';
       statusTexto = 'Em Preparo';
     }
-    if (pedido.status === 'pronto') {
+    if (statusTela === 'pronto') {
       btnTexto = '<i class="fa-solid fa-check-double"></i> Marcar Entregue';
       btnClass = 'pronto';
       statusTexto = 'Pronto';
     }
 
     let itensHtml = '';
-    pedido.itens.forEach(item => itensHtml += `<li>${item}</li>`);
+    pedido.itens.forEach(item => itensHtml += `<li>${escaparHTML(item)}</li>`);
 
     const card = document.createElement('div');
-    card.className = `order-card status-${pedido.status}`;
+    card.className = `order-card status-${statusTela}`;
     card.innerHTML = `
       <div class="order-header">
         <h3>#${pedido.id}</h3>
         <span class="time"><i class="fa-regular fa-clock"></i> ${pedido.hora}</span>
       </div>
       <div class="mesa-info">Mesa ${pedido.mesa}</div>
-      <div class="order-status status-${pedido.status}">${statusTexto}</div>
+      <div class="order-status status-${statusTela}">${statusTexto}</div>
       <ul class="order-items">${itensHtml}</ul>
-      <button class="btn-action-cozinha ${btnClass}" onclick="avancarStatus('${pedido.id}')">${btnTexto}</button>
+      <button class="btn-action-cozinha ${btnClass}" onclick="avancarStatus(${pedido.id})">${btnTexto}</button>
     `;
     grid.appendChild(card);
   });
@@ -200,101 +289,155 @@ function renderizarCozinha() {
   document.getElementById('count-pronto').innerText = countPronto;
 }
 
-window.avancarStatus = function(id) {
+// Passa o pedido para a próxima etapa e grava no banco
+window.avancarStatus = async function (id) {
   const pedido = pedidos.find(p => p.id === id);
-  if (pedido.status === 'aguardando') pedido.status = 'preparo';
-  else if (pedido.status === 'preparo') pedido.status = 'pronto';
-  else if (pedido.status === 'pronto') pedidos = pedidos.filter(p => p.id !== id);
-  renderizarCozinha();
+  if (!pedido) return;
+
+  const novoStatus = proximoStatus[pedido.status];
+
+  try {
+    await chamarApi('/admin/pedidos/' + id + '/status', enviarJson('PATCH', { status: novoStatus }));
+    await carregarPedidos();
+  } catch (erro) {
+    console.error('Erro ao avançar status:', erro);
+    alert('Erro ao atualizar o pedido: ' + erro.message);
+  }
+};
+
+// ---------- Relatórios (dados reais do banco) ----------
+
+async function carregarResumo() {
+  resumo = await chamarApi('/admin/relatorios');
 }
 
-// renderizar relatorios
-function renderizarRelatorios() {
-  const totalPedidos = pedidos.length > 0 ? 1 : 0; // logica simples para bater com o print
-  const faturamento = totalPedidos > 0 ? 108.57 : 0;
-  const ticketMedio = totalPedidos > 0 ? faturamento / totalPedidos : 0;
+async function renderizarRelatorios() {
+  try {
+    await carregarResumo();
+  } catch (erro) {
+    console.error('Erro ao carregar relatórios:', erro);
+    return;
+  }
 
-  document.getElementById('kpi-total').innerText = totalPedidos;
-  document.getElementById('kpi-faturamento').innerText = `R$ ${faturamento.toFixed(2).replace('.', ',')}`;
-  document.getElementById('kpi-ticket').innerText = `R$ ${ticketMedio.toFixed(2).replace('.', ',')}`;
-  document.getElementById('pedidos-hoje').innerText = totalPedidos;
-  document.getElementById('pedidos-semana').innerText = totalPedidos;
-  document.getElementById('pedidos-mes').innerText = totalPedidos;
+  document.getElementById('kpi-total').innerText = resumo.total_pedidos;
+  document.getElementById('kpi-faturamento').innerText = moeda(resumo.faturamento);
+  document.getElementById('kpi-ticket').innerText = moeda(resumo.ticket_medio);
+  document.getElementById('pedidos-hoje').innerText = resumo.pedidos_hoje;
+  document.getElementById('pedidos-semana').innerText = resumo.pedidos_semana;
+  document.getElementById('pedidos-mes').innerText = resumo.pedidos_mes;
+
+  // Formas de pagamento registradas no caixa
+  const pagamentos = resumo.pagamentos || {};
+  document.getElementById('pag-pix').innerText = pagamentos.pix || 0;
+  document.getElementById('pag-credito').innerText = pagamentos.credito || 0;
+  document.getElementById('pag-debito').innerText = pagamentos.debito || 0;
+  document.getElementById('pag-dinheiro').innerText = pagamentos.dinheiro || 0;
 
   const chart = document.getElementById('bar-chart');
   const chartVazio = document.getElementById('chart-vazio');
-  
-  if (totalPedidos > 0) {
-    chartVazio.classList.add('hidden');
-    chart.innerHTML = `
-      <div class="bar" style="height: 100%;"><span>Combinado Salmão</span></div>
-      <div class="bar" style="height: 100%;"><span>Temaki Salmão</span></div>
-      <div class="bar" style="height: 100%;"><span>Suco de Laranja</span></div>
-    `;
-  } else {
+
+  if (resumo.produtos.length === 0) {
     chart.innerHTML = '';
     chartVazio.classList.remove('hidden');
+    return;
   }
+
+  chartVazio.classList.add('hidden');
+
+  // A barra maior tem 100% de altura, as outras ficam proporcionais
+  const maior = Math.max(...resumo.produtos.map(p => p.quantidade));
+
+  chart.innerHTML = resumo.produtos.map(produto => {
+    const altura = Math.max(8, (produto.quantidade / maior) * 100);
+    return `<div class="bar" style="height: ${altura}%;" title="${produto.quantidade} vendido(s)"><span>${escaparHTML(produto.nome)}</span></div>`;
+  }).join('');
 }
 
-// funcoes de exportacao
+// ---------- Exportação ----------
+
 function setupExportacao() {
-  // exportar excel
-  document.getElementById('btn-exportar-excel').addEventListener('click', () => {
-    // criando planilha de funcionarios
-    const wsFuncionarios = XLSX.utils.json_to_sheet(funcionarios);
+  document.getElementById('btn-exportar-excel').addEventListener('click', async () => {
+    await carregarResumo();
+    await carregarFuncionarios();
+
+    const pagamentos = resumo.pagamentos || {};
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, wsFuncionarios, "Funcionários");
 
-    // criando planilha de pedidos
-    if (pedidos.length > 0) {
-      const wsPedidos = XLSX.utils.json_to_sheet(pedidos);
-      XLSX.utils.book_append_sheet(wb, wsPedidos, "Pedidos");
-    }
+    const resumoLinhas = [{
+      'Total de pedidos': resumo.total_pedidos,
+      'Faturamento (R$)': resumo.faturamento,
+      'Ticket médio (R$)': resumo.ticket_medio,
+      'Pedidos hoje': resumo.pedidos_hoje,
+      'Pedidos na semana': resumo.pedidos_semana,
+      'Pedidos no mês': resumo.pedidos_mes,
+      'Pagos em PIX': pagamentos.pix || 0,
+      'Pagos no crédito': pagamentos.credito || 0,
+      'Pagos no débito': pagamentos.debito || 0,
+      'Pagos em dinheiro': pagamentos.dinheiro || 0
+    }];
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(resumoLinhas), 'Resumo');
 
-    // baixando o arquivo
-    XLSX.writeFile(wb, "relatorio_sushi_byte.xlsx");
+    const maisVendidos = resumo.produtos.map(p => ({ Produto: p.nome, 'Quantidade vendida': p.quantidade }));
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(maisVendidos), 'Mais vendidos');
+
+    // a senha nunca vai para o arquivo
+    const listaFuncionarios = funcionarios.map(f => ({
+      Nome: f.nome,
+      Email: f.email,
+      Telefone: f.telefone || '',
+      Cargo: nomeCargo[String(f.cargo).toLowerCase()] || f.cargo,
+      Status: nomeStatus[f.status] || f.status
+    }));
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(listaFuncionarios), 'Funcionários');
+
+    XLSX.writeFile(wb, 'relatorio_sushi_byte.xlsx');
   });
 
-  // exportar pdf
-  document.getElementById('btn-exportar-pdf').addEventListener('click', () => {
+  document.getElementById('btn-exportar-pdf').addEventListener('click', async () => {
+    await carregarResumo();
+
+    const pagamentos = resumo.pagamentos || {};
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text("Relatório Sushi Byte", 14, 22);
-    
-    doc.setFontSize(11);
-    doc.text(`Total de Pedidos: ${pedidos.length}`, 14, 32);
-    doc.text(`Faturamento: R$ 108,57`, 14, 38);
+    doc.text('Relatório Sushi Byte', 14, 22);
 
-    // tabela de funcionarios no pdf
-    const tableColumn = ["Nome", "Email", "Cargo", "Status"];
-    const tableRows = funcionarios.map(f => [f.nome, f.email, f.cargo, f.status]);
+    doc.setFontSize(11);
+    doc.text(`Total de Pedidos: ${resumo.total_pedidos}`, 14, 32);
+    doc.text(`Faturamento: ${moeda(resumo.faturamento)}`, 14, 38);
+    doc.text(`Ticket médio: ${moeda(resumo.ticket_medio)}`, 14, 44);
+    doc.text(
+      `Pagamentos - PIX: ${pagamentos.pix || 0} | Crédito: ${pagamentos.credito || 0} | ` +
+      `Débito: ${pagamentos.debito || 0} | Dinheiro: ${pagamentos.dinheiro || 0}`,
+      14, 50
+    );
 
     doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 50,
+      head: [['Produto', 'Quantidade vendida']],
+      body: resumo.produtos.map(p => [p.nome, p.quantidade]),
+      startY: 60,
       theme: 'grid',
       headStyles: { fillColor: [220, 38, 38] } // vermelho
     });
 
-    doc.save("relatorio_sushi_byte.pdf");
+    doc.save('relatorio_sushi_byte.pdf');
   });
 }
 
-// inicializacao
+// ---------- Inicialização ----------
+
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
   setupModal();
   setupExportacao();
-  renderizarFuncionarios();
-  renderizarCozinha();
-});
+  carregarFuncionarios();
+  carregarPedidos();
 
-// ligacao com o resto do projeto: abre a aba indicada no link (ex: relatorios-admin.html#relatorios)
-document.addEventListener('DOMContentLoaded', () => {
+  // A cozinha atualiza sozinha a cada 10 segundos
+  setInterval(carregarPedidos, 10000);
+
+  // Abre a aba indicada no link (ex: relatorios-admin.html#relatorios)
   const alvo = window.location.hash.replace('#', '');
   if (!alvo) return;
   const item = document.querySelector('.nav-item[data-target="' + alvo + '"]');

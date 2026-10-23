@@ -9,75 +9,182 @@
 
     <link rel="stylesheet" href="css/Dashboard.css">
     <link rel="stylesheet" href="css/pedidos-admin.css">
+    <link rel="stylesheet" href="css/menu-lateral.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* botão da tabela */
+        .botao-fechar {
+            background: #e60012;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* janela de pagamento */
+        .fundo-pagamento {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .caixa-pagamento {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 24px;
+            width: 440px;
+            max-width: 90vw;
+            color: #ffffff;
+        }
+
+        .caixa-pagamento h2 {
+            margin: 0 0 6px;
+        }
+
+        .info-pagamento {
+            margin: 0 0 12px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .total-pagamento {
+            margin: 0 0 18px;
+            font-size: 32px;
+            font-weight: 800;
+            color: #e60012;
+        }
+
+        .rotulo-pagamento {
+            margin: 0 0 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .opcoes-pagamento {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .opcao-pagamento {
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .opcao-pagamento.escolhida {
+            border-color: #e60012;
+            background: #3b0a10;
+        }
+
+        .aviso-pagamento {
+            min-height: 20px;
+            margin: 0 0 12px;
+            color: #f87171;
+            font-size: 14px;
+        }
+
+        .botoes-pagamento {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .cancelar-pagamento {
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: #cbd5e1;
+            cursor: pointer;
+        }
+
+        .confirmar-pagamento {
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            background: #e60012;
+            color: #ffffff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    </style>
 
 </head>
 
 <body>
     <div class="app-shell">
 
-        <!-- MENU LATERAL ORIGINAL DO DASHBOARD -->
-        <aside class="sidebar">
+        <!-- MENU LATERAL (igual em todas as telas do administrador) -->
+        <aside class="sidebar menu-lateral">
+            <a class="menu-lateral-logo" href="Dashboard.html" aria-label="Sushi Byte início">SUSHI <span>BYTE</span></a>
 
-            <a class="brand" href="Dashboard.html" aria-label="Sushi Byte início">
-                <span class="brand-text">
-                    <strong>SUSHI</strong> <b>BYTE</b>
-                </span>
-            </a>
-            <nav class="navigation" aria-label="Menu principal">
-
-                <a class="nav-link" href="Dashboard.html">
-                    <span><i class="fa-solid fa-chart-column"></i></span>
+            <nav class="menu-lateral-itens" aria-label="Menu principal">
+                <a href="Dashboard.html" class="menu-lateral-link">
+                    <i class="fa-solid fa-chart-column"></i>
                     Dashboard
                 </a>
 
-                <a class="nav-link active" href="pedidos-admin.html">
-                    <span><i class="fa-solid fa-bag-shopping"></i></span>
+                <a href="pedidos-admin.html" class="menu-lateral-link active">
+                    <i class="fa-solid fa-bag-shopping"></i>
                     Pedidos
                 </a>
 
-                <a class="nav-link" href="cardapio-admin.html">
-                    <span><i class="fa-solid fa-bars"></i></span>
+                <a href="cardapio-admin.html" class="menu-lateral-link">
+                    <i class="fa-solid fa-bars"></i>
                     Cardápio
                 </a>
 
-                <a class="nav-link" href="estoque-admin.html">
-                    <span><i class="fa-solid fa-cube"></i></span>
+                <a href="estoque-admin.html" class="menu-lateral-link">
+                    <i class="fa-solid fa-cube"></i>
                     Estoque
                 </a>
 
-                <a class="nav-link" href="relatorios-admin.html#funcionarios">
-                    <span><i class="fa-solid fa-users"></i></span>
+                <a href="relatorios-admin.html#funcionarios" class="menu-lateral-link">
+                    <i class="fa-solid fa-users"></i>
                     Funcionários
                 </a>
 
-                <a class="nav-link" href="relatorios-admin.html#cozinha">
-                    <span><i class="fa-solid fa-kitchen-set"></i></span>
+                <a href="relatorios-admin.html#cozinha" class="menu-lateral-link">
+                    <i class="fa-solid fa-kitchen-set"></i>
                     Cozinha
                 </a>
 
-                <a class="nav-link" href="relatorios-admin.html#relatorios">
-                    <span><i class="fa-solid fa-chart-line"></i></span>
+                <a href="relatorios-admin.html#relatorios" class="menu-lateral-link">
+                    <i class="fa-solid fa-chart-line"></i>
                     Relatórios
                 </a>
-
             </nav>
 
-            <div class="sidebar-bottom">
-
+            <div class="menu-lateral-usuario">
                 <div class="user-avatar">G</div>
-
-                <div class="user-details">
+                <div class="menu-lateral-dados">
                     <strong id="nomeGerente">Gerente</strong>
                     <small>Gerente</small>
                 </div>
-
-                <button id="sairBtn" class="logout-button" type="button" title="Sair" aria-label="Sair">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-
             </div>
 
+            <a href="selecao-acesso.html" class="menu-lateral-sair" id="sairBtn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </a>
         </aside>
 
 
@@ -134,6 +241,8 @@
                             <th>Data</th>
                             <th>Total</th>
                             <th>Status</th>
+                            <th>Pagamento</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
 
@@ -149,6 +258,8 @@
     </div>
 
     <script>
+        const API = 'http://localhost:3000';
+
         const listaPedidos = document.getElementById('listaPedidos');
         const mensagem = document.getElementById('mensagem');
         const tabela = document.getElementById('tabelaPedidos');
@@ -156,6 +267,15 @@
 
         let pedidos = [];
 
+        // Formas de pagamento aceitas no caixa
+        const FORMAS = {
+            pix: 'PIX',
+            credito: 'Crédito',
+            debito: 'Débito',
+            dinheiro: 'Dinheiro'
+        };
+
+        // Evita injetar HTML vindo do banco na tela
         function escaparHTML(valor) {
             return String(valor ?? '').replace(/[&<>"']/g, caractere => ({
                 '&': '&amp;',
@@ -182,11 +302,13 @@
             });
         }
 
+        // Nomes dos status como estão gravados no banco
         function formatarStatus(status) {
             const nomes = {
                 recebido: 'Recebido',
-                preparando: 'Em preparação',
+                em_preparo: 'Em preparação',
                 pronto: 'Pronto',
+                entregue: 'Entregue',
                 conta_fechada: 'Conta fechada',
                 cancelado: 'Cancelado'
             };
@@ -194,14 +316,26 @@
             return nomes[status] || status || 'Não informado';
         }
 
+        // Nome da classe de cor do status (o CSS usa "preparando")
+        function classeDoStatus(status) {
+            if (status === 'em_preparo') return 'preparando';
+
+            return String(status || '')
+                .toLowerCase()
+                .replace(/[^a-z0-9_-]/g, '');
+        }
+
+        // Pedido que ainda não foi pago
+        function estaAberto(pedido) {
+            return !['conta_fechada', 'cancelado'].includes(pedido.status);
+        }
+
         function atualizarResumo() {
             document.getElementById('totalPedidos').textContent =
                 pedidos.length;
 
             document.getElementById('pedidosAndamento').textContent =
-                pedidos.filter(p =>
-                    !['conta_fechada', 'cancelado'].includes(p.status)
-                ).length;
+                pedidos.filter(estaAberto).length;
 
             document.getElementById('pedidosFechados').textContent =
                 pedidos.filter(p => p.status === 'conta_fechada').length;
@@ -218,9 +352,9 @@
             });
 
             listaPedidos.innerHTML = filtrados.map(p => {
-                const statusClasse = String(p.status || '')
-                    .toLowerCase()
-                    .replace(/[^a-z0-9_-]/g, '');
+                const acao = estaAberto(p)
+                    ? `<button type="button" class="botao-fechar" data-pedido="${escaparHTML(p.id)}">Fechar conta</button>`
+                    : '—';
 
                 return `
                     <tr>
@@ -230,10 +364,12 @@
                         <td>${escaparHTML(formatarData(p.data_pedido))}</td>
                         <td>${escaparHTML(formatarMoeda(p.total))}</td>
                         <td>
-                            <span class="status status-${statusClasse}">
+                            <span class="status status-${classeDoStatus(p.status)}">
                                 ${escaparHTML(formatarStatus(p.status))}
                             </span>
                         </td>
+                        <td>${escaparHTML(FORMAS[p.forma_pagamento] || '—')}</td>
+                        <td>${acao}</td>
                     </tr>
                 `;
             }).join('');
@@ -248,14 +384,17 @@
             }
         }
 
-        async function carregarPedidos() {
-            mensagem.hidden = false;
-            mensagem.classList.remove('erro');
-            mensagem.textContent = 'Carregando pedidos...';
-            tabela.hidden = true;
+        // "silencioso" = atualização automática, sem piscar a tela
+        async function carregarPedidos(silencioso = false) {
+            if (!silencioso) {
+                mensagem.hidden = false;
+                mensagem.classList.remove('erro');
+                mensagem.textContent = 'Carregando pedidos...';
+                tabela.hidden = true;
+            }
 
             try {
-                const resposta = await fetch('/admin/pedidos');
+                const resposta = await fetch(API + '/admin/pedidos');
                 const dados = await resposta.json();
 
                 if (!resposta.ok || !dados.sucesso) {
@@ -274,18 +413,143 @@
                 mensagem.classList.add('erro');
                 mensagem.textContent =
                     '❌ Não foi possível carregar os pedidos. Confira se o servidor está rodando e tente novamente.';
+                tabela.hidden = true;
 
                 console.error(erro);
             }
         }
 
+        // ----- Fechar conta (pagamento no caixa) -----
+
+        function abrirFechamento(pedido) {
+            // A conta é do cliente: soma todos os pedidos dele que ainda não foram pagos
+            const abertos = pedidos.filter(p =>
+                p.id_cliente === pedido.id_cliente && estaAberto(p)
+            );
+            const total = abertos.reduce((soma, p) => soma + Number(p.total), 0);
+
+            let formaEscolhida = null;
+
+            const fundo = document.createElement('div');
+            fundo.className = 'fundo-pagamento';
+
+            const botoesForma = Object.keys(FORMAS).map(chave =>
+                `<button type="button" class="opcao-pagamento" data-forma="${chave}">${FORMAS[chave]}</button>`
+            ).join('');
+
+            fundo.innerHTML = `
+                <div class="caixa-pagamento">
+                    <h2>Fechar conta</h2>
+                    <p class="info-pagamento">
+                        ${escaparHTML(pedido.nome_cliente)} • Mesa ${escaparHTML(pedido.mesa)} •
+                        ${abertos.length} pedido(s)
+                    </p>
+                    <p class="total-pagamento">${escaparHTML(formatarMoeda(total))}</p>
+
+                    <p class="rotulo-pagamento">Forma de pagamento</p>
+                    <div class="opcoes-pagamento">${botoesForma}</div>
+
+                    <p class="aviso-pagamento"></p>
+
+                    <div class="botoes-pagamento">
+                        <button type="button" class="cancelar-pagamento">Cancelar</button>
+                        <button type="button" class="confirmar-pagamento">Confirmar pagamento</button>
+                    </div>
+                </div>
+            `;
+
+            const aviso = fundo.querySelector('.aviso-pagamento');
+            const confirmar = fundo.querySelector('.confirmar-pagamento');
+
+            // Escolher a forma de pagamento
+            fundo.querySelectorAll('.opcao-pagamento').forEach(botao => {
+                botao.addEventListener('click', () => {
+                    fundo.querySelectorAll('.opcao-pagamento')
+                        .forEach(outro => outro.classList.remove('escolhida'));
+
+                    botao.classList.add('escolhida');
+                    formaEscolhida = botao.dataset.forma;
+                    aviso.textContent = '';
+                });
+            });
+
+            // Fechar a janela
+            fundo.querySelector('.cancelar-pagamento')
+                .addEventListener('click', () => fundo.remove());
+
+            fundo.addEventListener('click', evento => {
+                if (evento.target === fundo) fundo.remove();
+            });
+
+            // Confirmar: grava no banco
+            confirmar.addEventListener('click', async () => {
+                if (!formaEscolhida) {
+                    aviso.textContent = 'Escolha a forma de pagamento.';
+                    return;
+                }
+
+                confirmar.disabled = true;
+                aviso.textContent = 'Salvando...';
+
+                try {
+                    const resposta = await fetch(
+                        API + '/admin/clientes/' + pedido.id_cliente + '/fechar-conta',
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ forma_pagamento: formaEscolhida })
+                        }
+                    );
+                    const dados = await resposta.json();
+
+                    if (!resposta.ok || !dados.sucesso) {
+                        throw new Error(dados.erro || 'Não foi possível fechar a conta.');
+                    }
+
+                    fundo.remove();
+                    await carregarPedidos(true);
+
+                } catch (erro) {
+                    console.error(erro);
+                    aviso.textContent = erro.message;
+                    confirmar.disabled = false;
+                }
+            });
+
+            document.body.appendChild(fundo);
+        }
+
+        // Clique no botão "Fechar conta" de qualquer linha da tabela
+        listaPedidos.addEventListener('click', evento => {
+            const botao = evento.target.closest('.botao-fechar');
+            if (!botao) return;
+
+            const pedido = pedidos.find(p => String(p.id) === botao.dataset.pedido);
+            if (pedido) abrirFechamento(pedido);
+        });
+
+        // Mostra o nome de quem fez login (o botão de sair fica no js/sair.js)
+        function mostrarNomeDoGerente() {
+            const nome = sessionStorage.getItem('usuarioNome') || 'Gerente';
+
+            document.getElementById('nomeGerente').textContent = nome;
+            document.querySelector('.user-avatar').textContent =
+                nome.trim().charAt(0).toUpperCase() || 'G';
+        }
+
         filtro.addEventListener('input', mostrarPedidos);
 
         document.getElementById('btnAtualizar')
-            .addEventListener('click', carregarPedidos);
+            .addEventListener('click', () => carregarPedidos());
 
+        mostrarNomeDoGerente();
         carregarPedidos();
+
+        // A lista atualiza sozinha a cada 15 segundos
+        setInterval(() => carregarPedidos(true), 15000);
     </script>
+
+    <script src="js/sair.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,150 @@
+
+
+aside.menu-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    background: #101827;
+    border-right: 1px solid #253044;
+    overflow-y: auto;
+}
+
+/* fonte igual em todas as telas (menos nos ícones, que usam a fonte deles) */
+aside.menu-lateral *:not(i) {
+    font-family: Arial, sans-serif;
+}
+
+/* logo */
+aside.menu-lateral .menu-lateral-logo {
+    display: block;
+    padding: 28px 20px;
+    border-bottom: 1px solid #253044;
+    color: #f8fafc;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-decoration: none;
+}
+
+aside.menu-lateral .menu-lateral-logo span {
+    color: #f00016;
+}
+
+/* lista de telas */
+aside.menu-lateral .menu-lateral-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 12px;
+}
+
+aside.menu-lateral .menu-lateral-link,
+aside.menu-lateral .menu-lateral-sair {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    padding: 15px 16px;
+    border-radius: 14px;
+    color: #aab4c3;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+aside.menu-lateral .menu-lateral-link i,
+aside.menu-lateral .menu-lateral-sair i {
+    width: 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+aside.menu-lateral .menu-lateral-link:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+aside.menu-lateral .menu-lateral-link.active {
+    background: #f00016;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* quem está logado */
+aside.menu-lateral .menu-lateral-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 18px 20px;
+    border-top: 1px solid #253044;
+}
+
+aside.menu-lateral .user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #471523;
+    color: #ff5264;
+    font-weight: 700;
+}
+
+aside.menu-lateral .menu-lateral-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+aside.menu-lateral .menu-lateral-dados strong {
+    overflow: hidden;
+    color: #f8fafc;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+aside.menu-lateral .menu-lateral-dados small {
+    color: #818b9b;
+    font-size: 11px;
+}
+
+/* botão de sair */
+aside.menu-lateral .menu-lateral-sair {
+    padding: 22px 28px;
+    border-top: 1px solid #253044;
+    border-radius: 0;
+}
+
+aside.menu-lateral .menu-lateral-sair:hover {
+    color: #ffffff;
+}
+
+/* celular */
+@media (max-width: 700px) {
+    aside.menu-lateral .menu-lateral-logo {
+        padding: 18px;
+    }
+
+    aside.menu-lateral .menu-lateral-itens {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    aside.menu-lateral .menu-lateral-usuario {
+        margin-top: 0;
+    }
+}
+
+aside.menu-lateral i.fa-solid,
+aside.menu-lateral i.fa-solid::before {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+}

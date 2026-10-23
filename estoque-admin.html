@@ -8,55 +8,61 @@
 
     <link rel="stylesheet" href="css/Dashboard.css">
     <link rel="stylesheet" href="css/estoque-admin.css">
+    <link rel="stylesheet" href="css/menu-lateral.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
-    <aside class="sidebar">
-        <div class="logo">SUSHI <span>BYTE</span></div>
+    <aside class="sidebar menu-lateral">
+        <a class="menu-lateral-logo" href="Dashboard.html" aria-label="Sushi Byte início">SUSHI <span>BYTE</span></a>
 
-        <nav class="menu">
-            <a href="Dashboard.html" class="nav-link">
+        <nav class="menu-lateral-itens" aria-label="Menu principal">
+            <a href="Dashboard.html" class="menu-lateral-link">
                 <i class="fa-solid fa-chart-column"></i>
                 Dashboard
             </a>
 
-            <a href="pedidos-admin.html" class="nav-link">
+            <a href="pedidos-admin.html" class="menu-lateral-link">
                 <i class="fa-solid fa-bag-shopping"></i>
                 Pedidos
             </a>
 
-            <a href="cardapio-admin.html" class="nav-link">
+            <a href="cardapio-admin.html" class="menu-lateral-link">
                 <i class="fa-solid fa-bars"></i>
                 Cardápio
             </a>
 
-            <a href="estoque-admin.html" class="nav-link active">
+            <a href="estoque-admin.html" class="menu-lateral-link active">
                 <i class="fa-solid fa-cube"></i>
                 Estoque
             </a>
 
-            <a href="relatorios-admin.html#funcionarios" class="nav-link">
+            <a href="relatorios-admin.html#funcionarios" class="menu-lateral-link">
                 <i class="fa-solid fa-users"></i>
                 Funcionários
-
             </a>
 
-            <a href="relatorios-admin.html#cozinha" class="nav-link">
+            <a href="relatorios-admin.html#cozinha" class="menu-lateral-link">
                 <i class="fa-solid fa-kitchen-set"></i>
                 Cozinha
-
             </a>
 
-            <a href="relatorios-admin.html#relatorios" class="nav-link">
-                <i class="fa-solid fa-chart-column"></i>
+            <a href="relatorios-admin.html#relatorios" class="menu-lateral-link">
+                <i class="fa-solid fa-chart-line"></i>
                 Relatórios
-
             </a>
         </nav>
 
-        <a href="selecao-acesso.html" class="logout">
+        <div class="menu-lateral-usuario">
+            <div class="user-avatar">G</div>
+            <div class="menu-lateral-dados">
+                <strong id="nomeGerente">Gerente</strong>
+                <small>Gerente</small>
+            </div>
+        </div>
+
+        <a href="selecao-acesso.html" class="menu-lateral-sair" id="sairBtn">
             <i class="fa-solid fa-right-from-bracket"></i>
             Sair
         </a>
@@ -130,6 +136,7 @@
     </main>
 
     <script src="js/estoque-admin.js"></script>
+    <script src="js/sair.js"></script>
 </body>
 
 </html>

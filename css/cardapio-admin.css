@@ -928,3 +928,75 @@ body,
 .botaoDisponivelProduto:hover {
     background: #1b5039;
 }
+/* ===== CARDS DO CARDÁPIO ADMIN ===== */
+
+#listaDeProdutos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+#listaDeProdutos > .produto-card {
+    width: auto;
+    min-width: 0;
+}
+
+#listaDeProdutos .produto-card .precoProduto {
+    margin: 0 15px 14px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* os dois botões ficam lado a lado, sem estourar o card */
+#listaDeProdutos .acoesProduto {
+    display: flex;
+    gap: 8px;
+    margin: 0 15px 15px;
+}
+
+#listaDeProdutos .acoesProduto button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    gap: 6px;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    padding: 10px 8px;
+    border: 1px solid #253044;
+    border-radius: 10px;
+    background: #1e293b;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+#listaDeProdutos .acoesProduto button:hover {
+    filter: brightness(1.2);
+}
+
+/* Disponível = verde, Indisponível = vermelho */
+#listaDeProdutos .acoesProduto .botaoDisponivelProduto {
+    border-color: #166534;
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+}
+
+#listaDeProdutos .acoesProduto .botaoDisponivelProduto.indisponivel {
+    border-color: #8b2638;
+    background: #471523;
+    color: #ff5264;
+}
+
+/* aviso de estoque */
+#listaDeProdutos .produto-card .estadoEstoque {
+    margin: -5px 15px 15px;
+    font-size: 12px;
+}
+
+#listaDeProdutos .produto-card .estadoEstoque:empty {
+    display: none;
+}

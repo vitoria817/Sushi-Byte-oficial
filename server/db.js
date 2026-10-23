@@ -8,6 +8,4 @@ const pool = new Pool({
   database: 'BancoSushiByte'
 });
 
-module.exports = pool; [
-
-]
+module.exports = pool;

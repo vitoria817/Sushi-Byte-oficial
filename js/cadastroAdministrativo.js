@@ -55,12 +55,9 @@ class cadastroAdministrador {
                 .then(resposta => resposta.json())
                 .then(dados => {
                     if (dados.sucesso) {
-                        if (dados.cargo !== "gerente") {
-                            alert("O Dashboard é exclusivo para gerente.");
-                            return;
-                        }
-
-                        sessionStorage.setItem("usuarioNome", dados.nome || "Gerente");
+                        // gerente e funcionario entram no dashboard
+                        // (a tela de Funcionarios fica so para o gerente)
+                        sessionStorage.setItem("usuarioNome", dados.nome || "Usuário");
                         sessionStorage.setItem("usuarioCargo", dados.cargo);
                         window.location.href = "Dashboard.html";
                     } else {

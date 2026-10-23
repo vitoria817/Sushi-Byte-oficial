@@ -9,6 +9,14 @@ class cadastroCliente {
         this.#mesaCliente = mesaCliente;
     }
 
+    // mensagem para quem ja tinha cadastro (o cpf e a chave do cliente)
+    boasVindas(dados) {
+        if (dados.visitas > 1) {
+            return "Bem-vindo de volta, " + dados.nome + "! Esta é a sua " + dados.visitas + "ª visita ao Sushi Byte.";
+        }
+        return "Esse CPF já estava cadastrado. Bem-vindo de volta, " + dados.nome + "!";
+    }
+
     validar() {
         if (this.#nomeCliente === "") {
             alert("Digite seu Nome");
@@ -40,6 +48,11 @@ class cadastroCliente {
             .then(dados => {
                 if (dados.sucesso) {
                     localStorage.setItem("clienteId", dados.id);
+
+                    if (dados.jaCadastrado) {
+                        alert(this.boasVindas(dados));
+                    }
+
                     window.location.href = "cardapio.html";
                 } else {
                     alert("Erro ao cadastrar: " + dados.erro);
